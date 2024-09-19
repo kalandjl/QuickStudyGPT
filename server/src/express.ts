@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express"
 import cors from "cors"
+import { doGPT } from "./gpt.js"
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const app = express()
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.json()) // Middleware to parse JSON bodies
 app.use(cors({
     origin: 'http://localhost:3000', // Allow only this origin
     methods: ['GET', 'POST'], // Allow specific methods
@@ -18,10 +21,23 @@ app.use((req, res, next) => {
     
     next()
 })
-app.post('/gpt', (req: Request, res: Response) => {
+app.post('/gpt', async (req: Request, res: Response) => {
   
     console.log(req.body)
-    res.status(202).send(req.body)
+
+    if (!req.body) return res.status(404).send("No prompt")
+
+    const gptres = (await doGPT(req.body.notes))?.choices[0]
+
+    if (gptres) {
+
+        console.log(gptres)
+
+        return res.status(200).send(gptres)
+    }
+    
+
+    return res.status(400).send("failure to gpt :(")
 })
 
 app.listen(port, () => {

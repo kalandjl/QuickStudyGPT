@@ -4,13 +4,14 @@
           "es6"
        ],
        "target": "ESNext",
-       "moduleResolution": "node",
+       "moduleResolution": "NodeNext",
        "outDir": "dist",
-       "resolveJsonModule": true,
        "emitDecoratorMetadata": true,
        "esModuleInterop": true,
        "experimentalDecorators": true,
-       "sourceMap": true
+       "sourceMap": true,
+         "rootDir": "./src", 
+         "module": "NodeNext"
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules", "**/*.spec.ts"]
