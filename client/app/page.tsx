@@ -1,9 +1,20 @@
 "use client"
-import { useRef } from "react"
+import { FormEvent, useRef } from "react"
+import { getGPT } from "../lib/gpt"
 
 const Home = () => {
 
     let notes = useRef(null)
+
+    const doForm = async (e: FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault()
+
+        //@ts-ignore
+        const res = await getGPT(e.currentTarget.children[0].children[0].value)
+
+        console.log(res)
+    }
 
     return (
         <>
@@ -24,19 +35,8 @@ const Home = () => {
             id="main-division"
             className="h-screen px-40 py-5 bg-green-50">
                 <form 
-                action="submit" 
                 id="notes-form"
-                onSubmit={e => {
-
-                    e.preventDefault()
-
-                    if (!notes.current) return alert("no notes submitted")
-
-                    //@ts-ignore
-                    const formData = new FormData(e.target)
-                    console.log(notes.current.val)
-                    alert("Working with the AI")
-                }}>
+                onSubmit={(e) => doForm(e)}>
                     <div 
                     id="notes-input-wrap w-full h-64">
                         <input 
