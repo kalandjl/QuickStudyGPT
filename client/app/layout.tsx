@@ -2,6 +2,7 @@ import { Providers } from './providers'
 import { fonts } from './fonts'
 import "./globals.css"
 import theme from './theme'
+import Nav from '../components/Nav'
 
 
 
@@ -13,6 +14,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
+        <Nav />
         <Providers>{children}</Providers>
       </body>
     </html>
