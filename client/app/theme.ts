@@ -6,7 +6,7 @@ const theme = extendTheme({
   fonts: {
     heading: `'Inter', sans-serif`,
     body: `'Raleway', sans-serif`,
-  },
+  }
 })
 
 export default theme

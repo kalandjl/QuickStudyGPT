@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { doGPT } from "./gpt.js";
+import { correctAnswers, getQuestions } from "./gpt.js";
 import * as dotenv from 'dotenv';
 dotenv.config();
 const app = express();
@@ -21,9 +21,20 @@ app.post('/gpt', async (req, res) => {
     console.log(req.body);
     if (!req.body)
         return res.status(404).send("No prompt");
-    const gptres = (await doGPT(req.body.notes))?.choices[0];
+    const gptres = (await getQuestions(req.body.notes))?.choices[0];
     if (gptres) {
         console.log(gptres);
+        return res.status(200).send(gptres);
+    }
+    return res.status(400).send("failure to gpt :(");
+});
+app.post('/correct', async (req, res) => {
+    console.log(req.body);
+    if (!req.body)
+        return res.status(404).send("No prompt");
+    const gptres = (await correctAnswers(req.body.notes, req.body.answers, req.body.questions))?.choices[0];
+    if (gptres) {
+        console.log(req.body);
         return res.status(200).send(gptres);
     }
     return res.status(400).send("failure to gpt :(");
