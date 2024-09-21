@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { FC } from "react"
+import NavAccountDiv from "./NavAccountDiv"
 
 
 interface Props {
@@ -8,34 +9,43 @@ interface Props {
 }
 const Nav: FC<Props> = (props: Props) => {
 
+    const linksStyle = "text-black hover:cursor-pointer font-bold text-lg"
+
     return (
         <>
             <nav
             id="navbar"
-            className="h-20 bg-slate-700 mx-10 my-2 rounded-lg px-16">
-                <div id="content-flex" className="flex flex-row h-full place-content-between items-center">
-                    <div id="links" className="flex flex-row items-center gap-6">
+            className="px-48 h-16 bg-white">
+                <div id="content-flex" className="h-full flex justify-between">
+                    <div id="logo-wrap" className="px-6 grid place-items-center h-full">
+                        <div id="logo" className="h-10 w-10 bg-teal-500 opacity-50"></div>
+                    </div>
+                    <div id="links-wrap" className="h-full flex flex-row items-center gap-20 pr-20">
                         <Link href="/">
-                            <p className="text-white font-bold text-lg">
+                            <p className={linksStyle}>
                                 Home
                             </p>
                         </Link>
                         <Link href="/about">
-                            <p className="text-white font-bold text-lg">
+                            <p className={linksStyle}>
                                 About
                             </p>
                         </Link>
-                        <Link href="/sets">
-                            <p className="text-white font-bold text-lg">
-                                Sets
+                        <Link href="/contact">
+                            <p className={linksStyle}>
+                                Contact
+                            </p>
+                        </Link>
+                        <Link href="/policies">
+                            <p className={linksStyle}>
+                                Policies
                             </p>
                         </Link>
                     </div>
-                    <div id="account">
-                        <p className="text-lg text-white font-bold hover:underline hover:cursor-pointer underline-offset-1">Account</p>
+                    <div id="account-wrap">
+                        <NavAccountDiv /> 
                     </div>
                 </div>
-
             </nav>
         </>
     )

@@ -3,7 +3,7 @@ import { auth } from "./firebase";
 
 const provider = new GoogleAuthProvider()
 
-const googleSignInPopup = () => {
+export const googleSignInPopup = () => {
 
     
     signInWithPopup(auth, provider)

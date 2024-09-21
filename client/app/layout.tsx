@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body>
+      <body style={{backgroundColor: "#ffffff"}}>
         <Nav />
         <Providers>{children}</Providers>
       </body>
