@@ -14,7 +14,10 @@ export const getQuestions = async (notes: string) => {
             { role: "system", content: "You are a helpful assistant." },
             {
                 role: "user",
-                content: `Make 10 questions based off the CONTENT (not just core ideas) of these: "${notes}", and formate the questions such as ["question 1", "question 2",]. I should be able to run JSON.parse on the raw response without error: "${notes}"`,
+                content: `Make 10 FILL IN THE BLANK questions based off the CONTENT of these notes:
+                 "${notes}", and formate the questions such as {"1": {question: "", answer: ""}}. 
+                 I should be able to run JSON.parse() on the raw response without error. Remember, 
+                 no written response questions, just fill in the blanks`,
             },
         ],
     })

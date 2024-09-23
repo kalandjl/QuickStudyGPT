@@ -16,7 +16,8 @@ const Page: NextPage = () => {
                 <form className="w-full max-w-md">
 
                     <h1 className="mt-3 text-4xl font-extrabold text-slate-700 capitalize sm:text-3xl dark:text-white">
-                        Sign In</h1>
+                        Sign Up
+                    </h1>
 
                     <div className="relative flex items-center mt-8">
                         <span className="absolute">

@@ -3,6 +3,7 @@ import { fonts } from './fonts'
 import "./globals.css"
 import theme from './theme'
 import Nav from '../components/Nav'
+import Breadcrumbs from '../components/Breadcrumbs'
 
 
 
