@@ -1,0 +1,81 @@
+Unit A3: “Nucleic Acids” Note Sheet
+
+Introduction to Nucleic Acids:
+
+Nucleic acids are large polymers of unit molecules called nucleotides.
+
+Nucleotides themselves have three pieces:
+Five-carbon sugar
+A phosphate ion
+A nitrogenous base ("contains nitrogen")
+
+There are two types of nucleic acids:
+Deoxyribonucleic acid (DNA): makes up chromosomes and genes
+controls all cell activities, including cell division and protein synthesis
+undergoes mutation important to the process of evolution
+Ribonucleic Acid (RNA): works with DNA to direct protein synthesis
+
+
+
+Structure of Nucleic Acids:
+
+Nucleotides:
+
+The sugar that is found in DNA is deoxyribose, while ribose is used in RNA.
+
+The phosphate group is always the same, but the nitrogenous bases differ slightly between DNA and RNA.
+
+Nitrogenous Bases:
+
+There are four different bases in DNA – two of each of two different types.
+
+Purines are double-ringed structures.
+Adenine (A) and Guanine (G) are purines.
+
+Pyrimidines are single-ringed structures.
+Thymine (T) and Cytosine (C) are pyrimidines.
+
+Purines always bond with pyrimidines, through hydrogen bonding.
+
+Adenine pairs with Thymine.
+
+Cytosine pairs with Guanine.
+
+This is known as complementary base pairing, and other combinations of these purines and pyrimidines cannot exist due to their molecular dipoles being incompatible.
+
+In contrast, RNA is a shorter, single-stranded molecule produced from a segment of DNA to take genetic information into the cytoplasm.
+
+The base thymine does not exist in RNA. It is replaced by uracil, which is a very similar pyrimidine.
+
+That is, uracil bonds with adenine in RNA.
+
+The Double Helix of DNA Molecules:
+
+Molecules of DNA, along with small ball-like proteins called histones, form chromosomes. The DNA component has a spiraling ladder-shaped backbone of alternating deoxyribose and phosphates.
+
+Bases are bonded onto each sugar and H-bonded to each other, holding the two strands together, which forms a "double helix" structure.
+
+Adenosine Triphosphate (ATP):
+
+Another particularly important nucleic acid is the modified nucleotide known as adenosine triphosphate.
+
+ATP is a modified RNA nucleotide with an adenine base (adenine + ribose = adenosine), with two additional phosphate groups attached to its phosphate.
+
+
+
+
+
+
+The bond between the outer two phosphates is very high in energy.
+
+When it is broken by the enzyme ATPase, much energy is released, which can be used by the cell (for example, for muscle contraction).
+
+The free phosphate group exists as inorganic phosphate (Pi).
+
+The ATP Cycle:
+
+The bond between the first and second phosphates is also high in energy, but not as high as between the two end phosphates.
+
+Once sufficient energy is available in the cell, the components of ATP can be reunited back into the energy storage molecule through a process called phosphorylation.
+
+This is a combination of reactions known as the ATP Cycle.

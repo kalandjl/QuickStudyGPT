@@ -3,27 +3,33 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { ArrowIcon } from "../../icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getGPT } from "../../../lib/gpt";
+import { usePathname } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import Loading from "../../../components/Loading";
 
 
 const Page: NextPage = () => {
 
     let [notes, setNotes] = useState("")
+    let [loading, setLoading] = useState(false)
+
+    const router = useRouter()
+
+    useEffect(() => {console.log(loading)}, [loading])
+
 
     return (
         <>
+            {loading ? <>HELLO</> : ""}
+            <Loading loading={loading} />
             <div id="header-wrap" className="px-40 py-20">
                 <header className="font-extrabold text-5xl text-slate-800">
                     Create Set
                 </header>
             </div>
-            <form onSubmit={async (e) => {
-
-                e.preventDefault()
-
-                const res = await getGPT(notes)
-            }}>
+            <form>
                 <div id="textarea-wrap" className="grid place-items-center">
                     <div id="textarea" className="w-4/5">
                         <label 
@@ -48,7 +54,30 @@ const Page: NextPage = () => {
                             uppercase transition-colors duration-300 transform bg-teal-600 
                             rounded-lg lg:w-auto hover:bg-teal-500 focus:outline-none 
                             focus:bg-teal-500 font-extrabold text-lg"
-                            type="submit">
+                            onClick={async (e) => {
+
+                                
+                                setLoading(true)
+
+                                const res = await getGPT(notes)
+
+                                setLoading(false)
+
+                                const mes =  JSON.stringify(res.message.content)
+
+                                // Use regex to make GPT response parsable
+                                let cleanedMes = mes
+                                    .replace("json", "")
+                                    .replace(/\\n/g, '')      
+                                    .replace(/\\\"/g, '"')       
+                                    .replace(/^\s+/g, '')  
+                                    .replace(/\s+$/g, '') 
+                                    .replace(/\\/g, '')      
+                                    .replace(/^"+|"+$/g, '')
+                                    .replace(/```/g, '');
+
+                                router.push(`/set/?q="${cleanedMes}"`)
+                            }}>
                                 <div
                                 id="button-inner"
                                 className="grid grid-flow-col">
