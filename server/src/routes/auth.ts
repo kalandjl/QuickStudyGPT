@@ -1,47 +1,19 @@
-import express, { NextFunction, Request, Response } from "express"
-import cors from "cors"
-import { correctAnswers, getQuestions } from "../func/gpt.js"
-import * as dotenv from 'dotenv'
+import express, { Request, Response } from "express"
 import { LogInReqBody } from "../types/types.js"
 import { catchError } from "../misc/catch.js"
 import { verifyUser } from "../db/main.js"
 import { generateAccessToken, generateRefreshToken } from "../auth/index.js"
-dotenv.config()
+import basicMW from "../middleware/basic.js"
 
-const port = 4000
-
+const port = 5000
 const app = express()
 
-app.use(express.json()) // Middleware to parse JSON bodies
-app.use(cors({
-    origin: 'http://localhost:3000', // Allow only this origin
-    methods: ['GET', 'POST'], // Allow specific methods
-    allowedHeaders: ['Content-Type'], // Allow specific headers
-}));
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    // Pass to next layer of middleware
-    next();
-});
+// Sets up basic middleware
+basicMW(app)
 
 
 // Authenticate user and return token
 app.post('/login', async (req: Request, res: Response) => {
-
 
     // Basic login request
     const body: LogInReqBody = req.body
@@ -74,6 +46,7 @@ app.post('/login', async (req: Request, res: Response) => {
 })
 
 
+// Serve
 const serveAuth = () => {app.listen(port, () => console.log(`Auth served on port ${port}`))}
 
 export default serveAuth
