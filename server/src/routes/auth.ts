@@ -4,7 +4,7 @@ import { catchError } from "../misc/catch.js"
 import { verifyUser } from "../db/sql/main.js"
 import { generateAccessToken, generateRefreshToken } from "../auth/index.js"
 import basicMW from "../middleware/basic.js"
-import { nodeRedisDemo } from "../db/redis/index.js"
+import doRedis from "../db/redis/index.js"
 
 const port = 5000
 const app = express()
@@ -15,8 +15,6 @@ basicMW(app)
 
 // Authenticate user and return token
 app.post('/login', async (req: Request, res: Response) => {
-
-    nodeRedisDemo()
 
     // Basic login request
     const body: LogInReqBody = req.body
