@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { authenticateToken } from "../auth/index.js";
 require("dotenv").config()
 
+
 // Before user can access db calls, their jwt token must be authorized
 export const authenticateTokenMW = (req: Request, res: Response, next: NextFunction) => {
 
