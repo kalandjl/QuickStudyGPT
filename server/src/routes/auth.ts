@@ -1,20 +1,17 @@
 import express, { NextFunction, Request, Response } from "express"
 import cors from "cors"
-import { correctAnswers, getQuestions } from "./gpt.js"
+import { correctAnswers, getQuestions } from "../func/gpt.js"
 import * as dotenv from 'dotenv'
-import { LogInReqBody } from "./types.js"
-import { catchError } from "./catch.js"
-import { verifyUser } from "./db/main.js"
-
-import jwt from "jsonwebtoken"
+import { LogInReqBody } from "../types/types.js"
+import { catchError } from "../misc/catch.js"
+import { verifyUser } from "../db/main.js"
+import { generateAccessToken, generateRefreshToken } from "../auth/index.js"
 dotenv.config()
 
-const generateAccessToken = (user: { uid: string }) => {
-
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-}
+const port = 4000
 
 const app = express()
+
 app.use(express.json()) // Middleware to parse JSON bodies
 app.use(cors({
     origin: 'http://localhost:3000', // Allow only this origin
@@ -42,17 +39,20 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 
-const port = 4000
-
 // Authenticate user and return token
 app.post('/login', async (req: Request, res: Response) => {
 
+
+    // Basic login request
     const body: LogInReqBody = req.body
 
     const { email, password } = body
 
+    // Find errors
     let resObj = await catchError(verifyUser, {email: email, password: password})
 
+
+    // Error parsing
     if (resObj.code !== 200) {
         return res.status(resObj.code).send(resObj.message)
     } 
@@ -65,53 +65,15 @@ app.post('/login', async (req: Request, res: Response) => {
 
     if (!user.uid) return res.status(400).send("Issue occured")
 
-    console.log(user)
+    // Generate tokens
+    const accessToken = generateAccessToken(user)
+    const refreshToken = generateRefreshToken(user)
 
-    const accessToken = generateAccessToken(user.uid)
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
-
+    // Send them to client
     res.json({accessToken: accessToken, refreshToken: refreshToken})
 })
 
-app.post('/gpt', async (req: Request, res: Response) => {
-  
-    console.log(req.body)
 
-    if (!req.body) return res.status(404).send("No prompt")
+const serveAuth = () => {app.listen(port, () => console.log(`Auth served on port ${port}`))}
 
-    const gptres = (await getQuestions(req.body.notes))?.choices[0]
-
-    if (gptres) {
-
-        console.log(gptres)
-
-        return res.status(200).send(gptres)
-    }
-    
-
-    return res.status(400).send("failure to gpt :(")
-})
-
-app.post('/correct', async (req: Request, res: Response) => {
-
-    console.log(req.body)
-
-    if (!req.body) return res.status(404).send("No prompt")
-
-    const gptres = (await correctAnswers(req.body.notes, req.body.answers, req.body.questions))?.choices[0]
-
-    if (gptres) {
-
-        console.log(req.body)
-
-        return res.status(200).send(gptres)
-    }
-    
-
-    return res.status(400).send("failure to gpt :(")
-})
-
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`)
-})
-
+export default serveAuth

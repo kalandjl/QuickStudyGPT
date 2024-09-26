@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile-ts": "tsc ./src/express.ts  --outFile ./out -w",
-    "host": "nodemon ./dist/express.js"
+    "host": "nodemon ./dist/main.js"
   },
   "author": "",
   "license": "ISC",
