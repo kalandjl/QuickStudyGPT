@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { authenticateToken } from "../auth/index.js";
+import { authenticateAccessToken } from "../auth/index.js";
 require("dotenv").config()
 
 
@@ -11,5 +11,5 @@ export const authenticateTokenMW = (req: Request, res: Response, next: NextFunct
 
     if (token === null) return res.sendStatus(401)
 
-    authenticateToken(token, next)
+    authenticateAccessToken(token)
 }

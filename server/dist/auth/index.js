@@ -5,14 +5,22 @@ export const generateAccessToken = (user) => {
 export const generateRefreshToken = (user) => {
     return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
 };
-export const authenticateToken = (token, next) => {
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        //@ts-ignore
+export const authenticateAccessToken = (token) => {
+    let uid;
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, res) => {
         if (err)
             return res.status(401).send(err);
-        //@ts-ignore
-        req.user = user;
-        next();
+        uid = res.uid;
     });
+    return uid;
+};
+export const authenticateRefreshToken = (token) => {
+    let uid;
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, res) => {
+        if (err)
+            return res.status(401).send(err);
+        uid = res.uid;
+    });
+    return uid;
 };
 //# sourceMappingURL=index.js.map

@@ -2,7 +2,7 @@ import express, { Request, Response } from "express"
 import { LogInReqBody } from "../types/types.js"
 import { catchError } from "../misc/catch.js"
 import { verifyUser } from "../db/sql/main.js"
-import { generateAccessToken, generateRefreshToken } from "../auth/index.js"
+import { authenticateRefreshToken, generateAccessToken, generateRefreshToken } from "../auth/index.js"
 import basicMW from "../middleware/basic.js"
 import doRedis from "../db/redis/index.js"
 
@@ -42,8 +42,46 @@ app.post('/login', async (req: Request, res: Response) => {
     const accessToken = generateAccessToken(user)
     const refreshToken = generateRefreshToken(user)
 
+    doRedis((client) => {
+
+        client.set(refreshToken, refreshToken)
+    })
+
     // Send them to client
     res.json({accessToken: accessToken, refreshToken: refreshToken})
+})
+
+
+// Logout user by deleleting refresh token
+app.delete('/logout', async (req: Request, res: Response) => {
+
+
+    if (!req.body.refreshToken) return res.sendStatus(404)
+
+    // Delete refresh token
+    doRedis((client) => client.del(req.body.refreshToken))  
+
+    res.sendStatus(204)
+})
+
+app.post('/token', async (req: Request, res: Response) => {
+
+    const refreshToken = req.body.refreshToken
+
+    const refreshTokens = await doRedis((client) => {return client.keys('*')})
+
+    if (refreshToken == null) return res.sendStatus(401)
+    if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+
+    // Return uid to sign new token with
+    const uid = authenticateRefreshToken(refreshToken)
+
+    console.log(uid)
+
+    const accessToken = generateRefreshToken({uid: uid})
+
+
+    res.json({accessToken: accessToken})
 })
 
 

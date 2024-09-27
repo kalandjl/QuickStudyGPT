@@ -4,7 +4,7 @@ const doRedis = async (func) => {
         const client = createClient();
         await client.connect();
         //Run inputed redis code w/connected server
-        func(client);
+        return func(client);
     }
     catch (e) {
         console.error(e);

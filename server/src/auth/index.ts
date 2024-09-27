@@ -11,15 +11,30 @@ export const generateRefreshToken = (user: {uid: string}) => {
     return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 }
 
-export const authenticateToken = (token: string, next: NextFunction) => {
+export const authenticateAccessToken = (token: string) => {
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err: any, user: any) => {
-        //@ts-ignore
+    let uid: string
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err: any, res: any) => {
+        
         if (err) return res.status(401).send(err)
         
-        //@ts-ignore
-        req.user = user
-
-        next()
+        uid = res.uid
     })
+
+    return uid
+}
+
+export const authenticateRefreshToken = (token: string) => {
+
+    let uid: string 
+
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err: any, res: any) => {
+        
+        if (err) return res.status(401).send(err)
+
+        uid = res.uid
+    })
+
+    return uid
 }
