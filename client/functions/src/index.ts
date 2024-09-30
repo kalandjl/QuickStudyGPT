@@ -1,19 +1,29 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import * as functions from "firebase-functions";
+const admin = require("firebase-admin");
+admin.initializeApp();
 
-import {onRequest} from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
+export const onUserCreate = functions.auth.user().onCreate((user) => {
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+    // Make a firestore document for user whenever one is created
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+    let timestamp = admin.firestore.FieldValue.serverTimestamp()
+
+    admin.firestore().collection("users").doc(`/${user.uid}/`).create({
+        email: user.email,
+        uid: user.uid,
+        sets: [],
+        created: timestamp
+    })
+})
+
+export const onSetCreate = functions.firestore.document("/sets/{setId}").onCreate(async (doc) => {
+
+
+    // Fetch current users set IDs
+    const sets = (await admin.firestore().collection("users").doc(`/${doc.data().uid}`).get()).data().sets
+
+    // Update user's doc with new set document ID
+    admin.firestore().collection("users").doc(`/${doc.data().uid}`).update({
+        sets: [doc.id, ...sets]
+    })
+})

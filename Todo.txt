@@ -1,5 +1,3 @@
-- Firestore auth link w/onCreate cloud function
-- Firestore user: sets in json (stringified or raw?)
 
 
 - Create interactivity for /set page (delete, rename, star questions) MAKE SURE 

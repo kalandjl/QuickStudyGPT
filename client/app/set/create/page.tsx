@@ -8,6 +8,9 @@ import { getGPT } from "../../../lib/gpt";
 import { usePathname } from 'next/navigation'
 import { useRouter } from "next/navigation";
 import Loading from "../../../components/Loading";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
+import { auth, firestore } from "../../../lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 
 const Page: NextPage = () => {
@@ -15,10 +18,9 @@ const Page: NextPage = () => {
     let [notes, setNotes] = useState("")
     let [loading, setLoading] = useState(false)
 
+    let [user] = useAuthState(auth)
+
     const router = useRouter()
-
-    useEffect(() => {console.log(loading)}, [loading])
-
 
     return (
         <>
@@ -54,13 +56,14 @@ const Page: NextPage = () => {
                         focus:bg-teal-500 font-extrabold text-lg"
                         onClick={async (e) => {
 
+                            if (!user) return router.push('/sign-up')
+
                             setLoading(true)
 
                             const res = await getGPT(notes)
 
-                            setLoading(false)
-
                             const mes =  JSON.stringify(res.message.content)
+
 
                             // Use regex to make GPT response parsable
                             let cleanedMes = mes
@@ -73,7 +76,23 @@ const Page: NextPage = () => {
                                 .replace(/^"+|"+$/g, '')
                                 .replace(/```/g, '');
 
-                            router.push(`/set/?q="${cleanedMes}"`)
+                            try {
+                                JSON.parse(cleanedMes)
+
+                            } catch (e) {
+
+                                return 
+                            }
+
+                            const doc = await addDoc(collection(firestore, "/sets"), {
+                                "uid": user.uid,
+                                "title": "title",
+                                "content": JSON.parse(cleanedMes)
+                            })
+
+                            setLoading(false)
+
+                            router.push(`/set/${doc.id}`)
                         }}>
                             <div
                             id="button-inner"
