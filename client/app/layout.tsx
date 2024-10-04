@@ -1,7 +1,7 @@
-import { Providers } from './providers'
-import { fonts } from './fonts'
+import { Providers } from '../app/providers'
+import { fonts } from '../app/fonts'
 import "./globals.css"
-import theme from './theme'
+import theme from '../app/theme'
 import Nav from '../components/Nav'
 import Breadcrumbs from '../components/Breadcrumbs'
 

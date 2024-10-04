@@ -2,7 +2,7 @@
 
 import { NextPage } from "next";
 import Link from "next/link";
-import { ArrowIcon } from "../../icons";
+import { ArrowIcon } from "../../../app/icons";
 import { useEffect, useState } from "react";
 import { getGPT } from "../../../lib/gpt";
 import { usePathname } from 'next/navigation'

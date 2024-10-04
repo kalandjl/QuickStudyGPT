@@ -25,3 +25,8 @@ body {
     text-wrap: balance;
   }
 }
+
+input:focus-visible, button:focus-visible {
+  outline: none;
+  box-shadow: none;
+}

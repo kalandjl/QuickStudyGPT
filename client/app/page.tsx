@@ -2,7 +2,7 @@
 import { FormEvent, useRef, useState } from "react"
 import { getCorrections, getGPT } from "../lib/gpt"
 import { Button, FormLabel, Heading, Input, Spinner, Stack, Textarea, FormControl } from "@chakra-ui/react"
-import { ArrowIcon, NotesIcon, QuizIcon } from "./icons"
+import { ArrowIcon, NotesIcon, QuizIcon } from "../app/icons"
 import Link from "next/link"
 
 const Home = () => {
