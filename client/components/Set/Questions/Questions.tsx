@@ -39,9 +39,6 @@ const Questions: FC<Props> = (props: Props) => {
         return content
     }, [])
 
-    useEffect(() => {
-        console.log(answers)
-    }, [answers])
     return (
         <>
             <div className="px-64 pt-10">

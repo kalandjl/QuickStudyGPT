@@ -8,10 +8,6 @@ interface Props {
 
 const Modal: FC<Props> = (props) => {
 
-    useEffect(() => {
-        console.log("Modal state:", props.state);
-      }, [props.state]);
-
     return (
         <>
             <div 

@@ -52,11 +52,6 @@ const Home: NextPage = () => {
         }
     }, [])
 
-    useEffect(() => {
-        console.log(answers)
-    }, [answers])
-
-
     return (
         <>
             <div className="px-64 pt-10">
@@ -73,9 +68,6 @@ const Home: NextPage = () => {
 
                             if (!answers[question]) return
                             
-                            console.log(q[question].answer === answers[question].answer)
-                            console.log()
-
                             if (q[question].answer.toLocaleLowerCase() === answers[question].answer.toLocaleLowerCase()) {
                                 
                                 // Correct true

@@ -26,7 +26,6 @@ const ops: {jsx: React.ReactNode, color: string, weight: number, modal: ((id: st
         updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
         stateArr: boolean[],
         index: number) => {
-        console.log(state)
         return (
         <Modal state={state}>
             <DeleteModal updateState={updateState} state={stateArr} index={index} id={id} />
@@ -48,10 +47,7 @@ const ops: {jsx: React.ReactNode, color: string, weight: number, modal: ((id: st
         stateArr: boolean[],
         index: number) => (
         <>
-            <button
-            onClick={(e) => {deleteDoc(doc(firestore, `/sets/${id}`))}} >
-                Click
-            </button>
+           
         </>
      ),
     }
@@ -62,9 +58,6 @@ const SetOps: FC<Props> = (props: Props) => {
 
     const [modalsTrack, setModalsTrack] = useState<boolean[]>(new Array(ops.length).fill(false))
 
-    useEffect(() => {console.log(modalsTrack)}, [modalsTrack])
-
-    useEffect(() => console.log(props.id), [])
     return (
         <>
             <div className="bg-emerald-500"></div>
