@@ -18,7 +18,7 @@ export default function RootLayout({
             <body style={{backgroundColor: "#ffffff"}} className='h-screen'>
                 <Nav />
                 <Providers>
-                    <div className="grid grid-flow-row grid-cols-6">
+                    <div className="grid grid-flow-row grid-cols-6 h-screen">
                         <div className="col-span-1">
                             <SideBar />
                         </div>
