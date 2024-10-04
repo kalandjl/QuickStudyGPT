@@ -38,7 +38,7 @@ const Home: NextPage<{params: any}> = async ({ params }) => {
                             </span>
                         </h1>
                         <div className="mt-10">
-                            <SetOps />
+                            <SetOps id={id} />
                         </div>
                     </div>
                 </section>
