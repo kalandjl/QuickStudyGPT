@@ -3,6 +3,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { FC } from "react";
 import { firestore } from "../../../lib/firebase";
 import { useRouter } from "next/navigation";
+import { DeleteIcon } from "../../../app/icons"
 
 interface Props {
     updateState: React.Dispatch<React.SetStateAction<boolean[]>>
@@ -24,9 +25,7 @@ const DeleteModal: FC<Props> = (props) => {
                 <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl rtl:text-right dark:bg-gray-900 sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
                     <div>
                         <div className="flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-                            </svg>
+                            <DeleteIcon fill="#585959" />
                         </div>
 
                         <div className="mt-2 text-center">

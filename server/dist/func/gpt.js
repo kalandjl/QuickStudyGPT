@@ -11,11 +11,11 @@ export const getQuestions = async (notes) => {
             { role: "system", content: "You are a helpful assistant." },
             { "role": "user", "content": "Give me an example of a helpful fill in the blank question" },
             { "role": "assistant", "content": "The _______ is the _______ of the cell." },
-            { "role": "user", "content": "I only want one blank, and that question doesn't have enought context" },
+            { "role": "user", "content": "ONLY ONE BLANK, and that question doesn't have enought context to answer" },
             { "role": "assistant", "content": "The mitochondria is the _______ of the cell." },
             {
                 role: "user",
-                content: `Make 10 SINGLE FILL IN THE BLANK questions based off the CONTENT of these notes:
+                content: `That's perfect. Make 10 SINGLE FILL IN THE BLANK (ONLY ONE FILL IN THE BLANK) questions based off the CONTENT of these notes:
                 "${notes}", and formate the questions such as {"1": {question: "", answer: ""}}. 
                 I should be able to run JSON.parse() on the raw response without error. Remember, 
                 no written response questions, just fill in the blanks. If you use a question mark,
