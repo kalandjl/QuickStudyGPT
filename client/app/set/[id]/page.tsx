@@ -33,7 +33,7 @@ const Home: NextPage<{params: any}> = async ({ params }) => {
                         <h1 className="text-6xl font-bold">
                             <span className="text-gray-800 grid place-items-center w-1/3">
                                 <div className="grid grid-flow-col gap-5">
-                                    <Title title={set.title} /> 
+                                    <Title title={set.title} id={id} /> 
                                 </div>
                             </span>
                         </h1>
