@@ -4,6 +4,7 @@ import { auth, firestore } from "../../../lib/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
+import FolderOps from "./FolderOps";
 
 interface Props {}
 
@@ -59,7 +60,16 @@ const Folders: FC<Props> = () => {
             {Object.keys(docs).length > 0 ? (
             Object.keys(docs).map((folder, i) => (
                 <div key={i}>
-                    <h2 className="text-2xl font-bold">{folder}</h2>
+                    <div className="flex">
+                        <h2 className="text-2xl font-bold">
+                            {folder}
+                        </h2>
+                        {user ? 
+                        <FolderOps folder={folder} uid={user.uid} />        
+                        :
+                        <></>
+                        }        
+                    </div>
                     <div className="pl-4" id="sets-container">
                         {docs[folder]?.length > 0 ? (
                             docs[folder].map((doc: any, y: number) => (
