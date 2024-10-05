@@ -23,7 +23,7 @@ const Title: FC<Props> = (props) => {
                 className="px-5 py-2 rounded-lg
                 border-4 border-dashed
                 text-6xl
-                border-gray-200
+                border-gray-300
                 hover:border-gray-400 
                 focus:border-blue-500 focus:border-opacity-80 focus:text-gray-700 focus:border-4 focus:border-solid"
                 defaultValue={props.title} 

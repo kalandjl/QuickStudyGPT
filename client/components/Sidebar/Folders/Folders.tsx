@@ -12,6 +12,7 @@ const Folders: FC<Props> = () => {
     const [user] = useAuthState(auth);
     const [docs, setDocs] = useState<{ [folder: string]: any[] }>({});
     const [loading, setLoading] = useState(true);
+    const [hoverTrack, setHoverTrack] = useState<boolean[]>([])
 
     useEffect(() => {
 
@@ -53,28 +54,49 @@ const Folders: FC<Props> = () => {
         fetchData()
     }, [user])
 
+    useEffect(() => {
+
+        setHoverTrack(Object.keys(docs).map(x => false))
+    }, [docs])
+
+    useEffect(() => {
+        console.log(hoverTrack)
+    }, [hoverTrack])
+
+
     if (loading) return <div>Loading...</div> // Show a loading state while data is being fetched
 
+    let ho
     return (
         <div className="grid gap-2 grid-flow-row" id="folders-container">
             {Object.keys(docs).length > 0 ? (
             Object.keys(docs).map((folder, i) => (
                 <div key={i}>
-                    <div className="flex">
-                        <h2 className="text-2xl font-bold">
-                            {folder}
-                        </h2>
-                        {user ? 
-                        <FolderOps folder={folder} uid={user.uid} />        
-                        :
-                        <></>
-                        }        
+                    <div className="flex justify-between w-full rounded-md hover:bg-gray-300 transition ease-in-out px-2" id="folder-flex"
+                    onMouseEnter={() => setHoverTrack(hoverTrack.map((p, y) => {
+                        if (y === i) return true
+                        return false
+                    }))}
+                    onMouseLeave={() => setHoverTrack(hoverTrack.map((p, y) => {
+                        if (y === i) return false
+                        return false
+                    }))}>
+                            <h2 className="text-2xl font-bold">
+                                {folder}
+                            </h2>
+                            <div className="grid place-items-center w-min">
+                                {user ? 
+                                <FolderOps folder={folder} uid={user.uid} state={hoverTrack} index={i} />        
+                                :
+                                <></>
+                                }   
+                            </div>
                     </div>
                     <div className="pl-4" id="sets-container">
                         {docs[folder]?.length > 0 ? (
                             docs[folder].map((doc: any, y: number) => (
                             <Link href={`/set/${doc.id}`} key={y}>
-                                <p className="font-semibold">{doc.title}</p>
+                                <p className="font-semibold hover:underline">{doc.title}</p>
                             </Link>
                             ))
                         ) : (

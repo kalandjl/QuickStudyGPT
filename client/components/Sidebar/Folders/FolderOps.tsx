@@ -7,15 +7,20 @@ import Modal from "../../Modal";
 interface Props {
     folder: string
     uid: string
+    index: number
+    state: boolean[]
 }
 
 const FolderOps: FC<Props> = (props) => {
 
-    const [modalActive, setModalActive] = useState<boolean>(false)
+    let [modalActive, setModalActive] = useState<boolean>(false)
 
     return (
         <>
-            <div id="dlt-btn-wrap hover:static hidden" onClick={() => {
+            <div id="dlt-btn-wrap" 
+            className={`${props.state[props.index] ? "static" : "hidden"}
+            h-full grid place-items-center hover:cursor-pointer`} 
+            onClick={() => {
                 
                 setModalActive(true)
             }}>
