@@ -1,72 +1,48 @@
 "use client"
 import React, { FC, useEffect, useState } from "react";
-import { DeleteIcon } from "../../../app/icons";
+import { CircleAddIcon, DeleteIcon } from "../../../app/icons";
 import { FolderIcon } from "../../../app/icons";
 import { deleteDoc, doc } from "firebase/firestore";
-import { firestore } from "../../../lib/firebase";
+import { auth, firestore } from "../../../lib/firebase";
 import Modal from "../../Modal";
-import DeleteModal from "./DeleteModal";
-import AddToFolderModal from "./AddToFolderModal";
+import NewFolderModal from "./NewFolderModal";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 
 interface Props {
-    id: string
+    uid: string
 }
 
-const ops: {jsx: React.ReactNode, color: string, weight: number, modal: ((id: string , state: boolean, updateState: React.Dispatch<React.SetStateAction<boolean[]>>, stateArr: boolean[], index: number) => React.ReactNode)}[] = [
+const ops: {jsx: React.ReactNode, modal: ((uid: string, state: boolean, updateState: React.Dispatch<React.SetStateAction<boolean[]>>, stateArr: boolean[], index: number) => React.ReactNode)}[] = [
     { "jsx": <>
-         <DeleteIcon />
-         <p>
-             Delete
-         </p>
+        <CircleAddIcon fill="#000000" />
      </>,
-     "color": "red",
-     "weight": 500,
      "modal": (
-        id: string, 
+        uid: string,
         state: boolean, 
         updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
         stateArr: boolean[],
         index: number) => {
         return (
         <Modal state={state}>
-            <DeleteModal updateState={updateState} state={stateArr} index={index} id={id} />
+            <NewFolderModal updateState={updateState} state={stateArr} index={index} uid={uid} />
         </Modal>
      )}
-     },
-     { "jsx": <>
-         <FolderIcon />
-         <p>
-             Add to folder
-         </p>
-     </>,
-     "color": "purple",
-     "weight": 800,
-     "modal": (
-        id: string, 
-        state: boolean, 
-        updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
-        stateArr: boolean[],
-        index: number) => (
-        <>
-            <Modal state={state}>
-                <AddToFolderModal updateState={updateState} state={stateArr} index={index} id={id} />
-            </Modal>
-        </>
-     ),
-    }
+    },
 ]
 
 
 const SetOps: FC<Props> = (props: Props) => {
 
     const [modalsTrack, setModalsTrack] = useState<boolean[]>(new Array(ops.length).fill(false))
+    let [user] = useAuthState(auth)
 
     return (
         <>
-            <div className="bg-purple-800"></div>
+            <div className="bg-emerald-500"></div>
             <div className="flex gap-5" id="ops-container">
                 {/* List of options, mapped into elements to avoid redundancy */}
-                {
+                {user ?
                 ops.map((x, i) => 
                     {
                     return (
@@ -75,8 +51,8 @@ const SetOps: FC<Props> = (props: Props) => {
                         className={`
                         mt-2 ml-2
                         transition ease-in-out
-                        hover:scale-110 hover:bg-${x.color}-${(x.weight + 200).toString()} hover:cursor-pointer
-                        flex gap-2 px-4 py-2 rounded-lg bg-${x.color}-${x.weight.toString()} font-bold text-white`}
+                        hover:scale-110hover:cursor-pointer
+                        flex gap-2 px-4 py-2 rounded-lg font-bold text-white`}
                         onClick={(e) => setModalsTrack(modalsTrack.map((y, u) => {
                             if (u === i) {
                                 return y ? false : true
@@ -88,9 +64,10 @@ const SetOps: FC<Props> = (props: Props) => {
                             {x.jsx}
                         </div>
                         {/* Pass through on/off state and the set id to modal  */}
-                        {x.modal(props.id, modalsTrack[i], setModalsTrack, modalsTrack, i)}
+                        {x.modal(user.uid, modalsTrack[i], setModalsTrack, modalsTrack, i)}
                     </div>
-                )})
+                )}) : <>
+                </>
                 }
             </div>
         </>
