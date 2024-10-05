@@ -66,11 +66,9 @@ const SetOps: FC<Props> = (props: Props) => {
                 {
                 ops.map((x, i) => 
                     {
-
                     return (
-                    <>
+                    <div key={i}>
                         <div 
-                        key={i}
                         className={`
                         mt-2 ml-2
                         transition ease-in-out
@@ -88,7 +86,7 @@ const SetOps: FC<Props> = (props: Props) => {
                         </div>
                         {/* Pass through on/off state and the set id to modal  */}
                         {x.modal(props.id, modalsTrack[i], setModalsTrack, modalsTrack, i)}
-                    </>
+                    </div>
                 )})
                 }
             </div>
