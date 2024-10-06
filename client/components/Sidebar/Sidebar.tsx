@@ -14,11 +14,14 @@ const SideBar: FC<Props> = () => {
     let [reload, setReload] = useState(true)
     let [user] = useAuthState(auth)
 
+    useEffect(() => console.log(reload), [reload])
+
     return (
         <div className="h-full w-full bg-gray-100 px-2 py-4">
-            {user ? <Ops uid={user?.uid} /> : <></>}
+            {reload}
+            {user ? <Ops uid={user?.uid} reload={setReload} /> : <></>}
             <div className="w-full my-3 bg-gray-400" style={{height: "3px"}}></div>
-            <Folders />
+            <Folders key={reload.toString()} reload={setReload} />
         </div>
     )
 }

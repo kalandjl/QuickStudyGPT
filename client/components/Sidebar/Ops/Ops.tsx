@@ -11,9 +11,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 interface Props {
     uid: string
+    reload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ops: {jsx: React.ReactNode, modal: ((uid: string, state: boolean, updateState: React.Dispatch<React.SetStateAction<boolean[]>>, stateArr: boolean[], index: number) => React.ReactNode)}[] = [
+const ops: {jsx: React.ReactNode, modal: ((
+    uid: string, 
+    state: boolean, 
+    updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
+    stateArr: boolean[], 
+    index: number,
+    reload: React.Dispatch<React.SetStateAction<boolean>>) => React.ReactNode)}[] = [
     { "jsx": <>
         <CreateFolderIcon fill="#000000" />
      </>,
@@ -22,10 +29,11 @@ const ops: {jsx: React.ReactNode, modal: ((uid: string, state: boolean, updateSt
         state: boolean, 
         updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
         stateArr: boolean[],
-        index: number) => {
+        index: number,
+        reload: React.Dispatch<React.SetStateAction<boolean>>) => {
         return (
         <Modal state={state}>
-            <NewFolderModal updateState={updateState} state={stateArr} index={index} uid={uid} />
+            <NewFolderModal updateState={updateState} state={stateArr} index={index} uid={uid} reload={reload} />
         </Modal>
      )}
     },
@@ -63,7 +71,14 @@ const SetOps: FC<Props> = (props: Props) => {
                             {x.jsx}
                         </div>
                         {/* Pass through on/off state and the set id to modal  */}
-                        {x.modal(user.uid, modalsTrack[i], setModalsTrack, modalsTrack, i)}
+                        {x.modal(
+                            user.uid, // UID
+                            modalsTrack[i], // Initial state
+                            setModalsTrack, // State dispatch function
+                            modalsTrack, // State
+                            i, // Index to set modal's visibility
+                            props.reload // Reload function to auto-update
+                            )}
                     </div>
                 )}) : <>
                 </>

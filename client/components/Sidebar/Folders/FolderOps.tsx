@@ -12,38 +12,49 @@ interface Props {
     uid: string
     index: number
     state: boolean[]
+    reload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ops: {jsx: React.ReactNode, modal: ((folder: string, uid: string, state: boolean, updateState: React.Dispatch<React.SetStateAction<boolean[]>>, stateArr: boolean[], index: number) => React.ReactNode)}[] = [
+interface ModalProps {
+    folder: string, 
+    uid: string, state: boolean, 
+    updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
+    stateArr: boolean[], 
+    index: number,
+    reload: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const ops: {
+    jsx: React.ReactNode, modal: (props: ModalProps) => React.ReactNode}[] = [
     { "jsx": <>
         <EditIcon fill="#000000" />
      </>,
-     "modal": (
-        folder: string,
-        uid: string,
-        state: boolean, 
-        updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
-        stateArr: boolean[],
-        index: number) => {
+     "modal": (props) => {
         return (
-        <Modal state={state}>
-            <RenameFolderModal updateState={updateState} state={stateArr} index={index} folder={folder} uid={uid} />
+        <Modal state={props.state}>
+            <RenameFolderModal 
+            updateState={props.updateState} 
+            state={props.stateArr} 
+            index={props.index} 
+            folder={props.folder} 
+            uid={props.uid} 
+            reload={props.reload} />
         </Modal>
      )}
     },
     { "jsx": <>
         <DeleteIcon fill="#000000" />
      </>,
-     "modal": (
-        folder: string,
-        uid: string,
-        state: boolean, 
-        updateState: React.Dispatch<React.SetStateAction<boolean[]>>, 
-        stateArr: boolean[],
-        index: number) => {
+     "modal": (props) => {
         return (
-        <Modal state={state}>
-            <DeleteFolderModal updateState={updateState} state={stateArr} index={index} folder={folder} uid={uid} />
+        <Modal state={props.state}>
+            <DeleteFolderModal 
+            updateState={props.updateState} 
+            state={props.stateArr} 
+            index={props.index} 
+            folder={props.folder} 
+            uid={props.uid} 
+            reload={props.reload} />
         </Modal>
      )}
     },
@@ -83,7 +94,15 @@ const FolderOps: FC<Props> = (props) => {
                             {x.jsx}
                         </div>
                         {/* Pass through on/off state and the set id to modal  */}
-                        {x.modal(props.folder, user.uid, modalsTrack[i], setModalsTrack, modalsTrack, i)}
+                        {x.modal({
+                            folder: props.folder, 
+                            uid: user.uid, 
+                            updateState: setModalsTrack,
+                            state: modalsTrack[i], 
+                            stateArr: modalsTrack, 
+                            index: i,
+                            reload: props.reload
+                        })}
                     </div>
                 )}) : <>
                 </>

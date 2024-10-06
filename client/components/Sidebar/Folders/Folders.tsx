@@ -6,9 +6,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import FolderOps from "./FolderOps";
 
-interface Props {}
+interface Props {
+    reload: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-const Folders: FC<Props> = () => {
+const Folders: FC<Props> = (props) => {
     const [user] = useAuthState(auth);
     const [docs, setDocs] = useState<{ [folder: string]: any[] }>({});
     const [loading, setLoading] = useState(true);
@@ -22,7 +24,6 @@ const Folders: FC<Props> = () => {
         try {
             const userDoc = await getDoc(doc(firestore, `/users/${user.uid}`))
             const sets = JSON.parse(userDoc?.data()?.sets || {})
-            console.log(sets)
 
             let temp: { [folder: string]: any[] } = {}
 
@@ -46,7 +47,6 @@ const Folders: FC<Props> = () => {
             setDocs(temp)
             setLoading(false) // Set loading to false after the documents have been fetched
         } catch (error) {
-            console.error("Error fetching documents: ", error)
             setLoading(false)
         }
         }
@@ -58,10 +58,6 @@ const Folders: FC<Props> = () => {
 
         setHoverTrack(Object.keys(docs).map(x => false))
     }, [docs])
-
-    useEffect(() => {
-        console.log(hoverTrack)
-    }, [hoverTrack])
 
 
     if (loading) return <div>Loading...</div> // Show a loading state while data is being fetched
@@ -86,7 +82,7 @@ const Folders: FC<Props> = () => {
                             </h2>
                             <div className="grid place-items-center w-min">
                                 {user ? 
-                                <FolderOps folder={folder} uid={user.uid} state={hoverTrack} index={i} />        
+                                <FolderOps folder={folder} uid={user.uid} state={hoverTrack} index={i} reload={props.reload} />        
                                 :
                                 <></>
                                 }   

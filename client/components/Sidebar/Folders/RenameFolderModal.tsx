@@ -10,6 +10,7 @@ interface Props {
     folder: string
     uid: string
     index: number
+    reload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const RenameFolderModal: FC<Props> = (props) => {
@@ -85,6 +86,10 @@ const RenameFolderModal: FC<Props> = (props) => {
                                     const newState = [...props.state];
                                     newState[props.index] = false; // Set the current modal state to false (close)
                                     props.updateState(newState);
+
+                                    setTimeout(() => {
+                                        props.reload(prev => !prev)
+                                    }, 200); // Adjust the delay as needed 
                                 }}
                                 className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
                                 text-white capitalize transition-colors duration-300 transform bg-green-600 rounded-md 
