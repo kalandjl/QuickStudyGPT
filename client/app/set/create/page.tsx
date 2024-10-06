@@ -34,18 +34,18 @@ const Page: NextPage = () => {
                 <div id="textarea" className="w-4/5">
                     <label 
                     htmlFor="Notes" 
-                    className="block text-sm text-gray-500 dark:text-gray-300">
+                    className="block text-xl mb-5 font-bold text-gray-500 dark:text-gray-300">
                         Notes
                     </label>
                     <textarea 
                     onChange={(e) => {setNotes(e.target.value)}}
-                    placeholder="Copy & Paste" 
-                    className="block  mt-2 w-full placeholder-gray-400/70 
-                    dark:placeholder-gray-500 rounded-lg border border-gray-200
+                    placeholder="Copy & Paste Notes Here" 
+                    className="block  mt-2 w-full placeholder-gray-500/70 font-bold
+                     rounded-lg border border-gray-500
                     bg-white px-4 h-64 py-2.5 text-gray-700 focus:border-blue-400
-                    focus:outline-none focus:ring focus:ring-blue-300 
+                    focus:outline-none focus:ring focus:ring-green-300 
                     focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 
-                    dark:text-gray-300 dark:focus:border-blue-300"></textarea>
+                    dark:text-gray-700 dark:focus:border-blue-300"></textarea>
                 </div>
                 <div id="section-button" className="w-4/5 pl-10">
                     <div id="button-wrap">
@@ -58,6 +58,8 @@ const Page: NextPage = () => {
 
                             if (!user) return router.push('/sign-up')
 
+                            if (notes.length < 10) return alert("Notes must be at least 10 characters")
+                                
                             setLoading(true)
 
                             const res = await getGPT(notes)

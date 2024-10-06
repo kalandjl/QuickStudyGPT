@@ -1,6 +1,6 @@
 "use client"
 import React, { FC, useEffect, useState } from "react";
-import { CircleAddIcon, DeleteIcon } from "../../../app/icons";
+import { CircleAddIcon, CreateFolderIcon, DeleteIcon } from "../../../app/icons";
 import { FolderIcon } from "../../../app/icons";
 import { deleteDoc, doc } from "firebase/firestore";
 import { auth, firestore } from "../../../lib/firebase";
@@ -15,7 +15,7 @@ interface Props {
 
 const ops: {jsx: React.ReactNode, modal: ((uid: string, state: boolean, updateState: React.Dispatch<React.SetStateAction<boolean[]>>, stateArr: boolean[], index: number) => React.ReactNode)}[] = [
     { "jsx": <>
-        <CircleAddIcon fill="#000000" />
+        <CreateFolderIcon fill="#000000" />
      </>,
      "modal": (
         uid: string,
@@ -49,9 +49,8 @@ const SetOps: FC<Props> = (props: Props) => {
                     <div key={i}>
                         <div 
                         className={`
-                        mt-2 ml-2
                         transition ease-in-out
-                        hover:scale-110hover:cursor-pointer
+                        hover:scale-110 hover:cursor-pointer hover:bg-gray-300
                         flex gap-2 px-4 py-2 rounded-lg font-bold text-white`}
                         onClick={(e) => setModalsTrack(modalsTrack.map((y, u) => {
                             if (u === i) {

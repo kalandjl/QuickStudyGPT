@@ -32,8 +32,8 @@ const ops: {jsx: React.ReactNode, color: string, weight: number, modal: ((id: st
             <DeleteModal updateState={updateState} state={stateArr} index={index} id={id} />
         </Modal>
      )}
-     },
-     { "jsx": <>
+    },
+    { "jsx": <>
          <FolderIcon />
          <p>
              Add to folder
