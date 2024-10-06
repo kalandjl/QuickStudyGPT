@@ -16,28 +16,67 @@ export const onUserCreate = functions.auth.user().onCreate((user) => {
     })
 })
 
-// When set is created, add it to it's users firestore document
+// When set is created, add it to the user's Firestore document
 export const onSetCreate = functions.firestore.document("/sets/{setId}").onCreate(async (doc) => {
+    const uid = doc.data().uid;
+    const setId = doc.id;
 
+    // Fetch current user's sets
+    const userDoc = await admin.firestore().collection("users").doc(uid).get();
+    const userData = userDoc.data();
+    
+    let sets;
 
-    // Fetch current users set IDs
-    const sets = (await admin.firestore().collection("users").doc(`/${doc.data().uid}`).get()).data().sets
+    // Handle the case where sets is a JSON string
+    if (typeof userData.sets === 'string') {
+        sets = JSON.parse(userData.sets);
+    } else {
+        sets = userData.sets || {};
+    }
 
-    // Update user's doc with new set document ID
-    admin.firestore().collection("users").doc(`/${doc.data().uid}`).update({
-        sets: [doc.id, ...sets]
-    })
-})
+    // Check if the 'default' folder exists, if not, create it
+    if (!sets.default) {
+        sets.default = [];
+    }
 
-// When set is deleted, remove it from it's users firestore document
+    // Add the new set ID to the 'default' folder
+    sets.default.push(setId);
+
+    // Update user's doc with the modified sets object
+    await admin.firestore().collection("users").doc(uid).update({
+        sets: JSON.stringify(sets)  // Store it back as a string if necessary
+    });
+});
+
+// When a set is deleted, remove its ID from the user's Firestore document
 export const onSetDelete = functions.firestore.document("/sets/{setId}").onDelete(async (doc) => {
+    const uid = doc.data().uid;
+    const setId = doc.id;
 
+    // Fetch current user's sets
+    const userDoc = await admin.firestore().collection("users").doc(uid).get();
+    const userData = userDoc.data();
+    
+    let sets;
 
-    // Fetch current users set IDs
-    const sets = (await admin.firestore().collection("users").doc(`/${doc.data().uid}`).get()).data().sets
+    // Handle the case where sets is a JSON string
+    if (typeof userData.sets === 'string') {
+        sets = JSON.parse(userData.sets);
+    } else {
+        sets = userData.sets || {};
+    }
 
-    // Update user's doc with new set document ID
-    admin.firestore().collection("users").doc(`/${doc.data().uid}`).update({
-        sets: sets.filter((id: string) => doc.id != id)
-    })
-})
+    // Iterate through the folders to find and remove the set ID
+    for (const folder in sets) {
+        const index = sets[folder].indexOf(setId);
+        if (index > -1) {
+            sets[folder].splice(index, 1); // Remove the set ID from the folder
+            break; // Exit loop after finding and removing the set ID
+        }
+    }
+
+    // Update user's doc with the modified sets object
+    await admin.firestore().collection("users").doc(uid).update({
+        sets: JSON.stringify(sets)  // Store it back as a string if necessary
+    });
+});
