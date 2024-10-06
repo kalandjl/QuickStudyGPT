@@ -62,13 +62,14 @@ const Folders: FC<Props> = (props) => {
 
     if (loading) return <div>Loading...</div> // Show a loading state while data is being fetched
 
-    let ho
     return (
         <div className="grid gap-2 grid-flow-row" id="folders-container">
             {Object.keys(docs).length > 0 ? (
             Object.keys(docs).map((folder, i) => (
                 <div key={i}>
-                    <div className="flex justify-between w-full rounded-md hover:bg-gray-300 transition ease-in-out px-2" id="folder-flex"
+                    <div className={`flex justify-between w-full rounded-md hover:bg-gray-300 
+                    transition ease-in-out px-2`}
+                    id="folder-flex"
                     onMouseEnter={() => setHoverTrack(hoverTrack.map((p, y) => {
                         if (y === i) return true
                         return false
@@ -78,17 +79,17 @@ const Folders: FC<Props> = (props) => {
                         return false
                     }))}>
                             <h2 className="text-2xl font-bold">
-                                {folder}
+                                {folder === "default" ? "" : folder}
                             </h2>
                             <div className="grid place-items-center w-min">
-                                {user ? 
+                                {user && folder !== "default" ? 
                                 <FolderOps folder={folder} uid={user.uid} state={hoverTrack} index={i} reload={props.reload} />        
                                 :
                                 <></>
                                 }   
                             </div>
                     </div>
-                    <div className="pl-4" id="sets-container">
+                    <div className={`pl-${folder === "default" ? "0" : "4"}`} id="sets-container">
                         {docs[folder]?.length > 0 ? (
                             docs[folder].map((doc: any, y: number) => (
                             <Link href={`/set/${doc.id}`} key={y}>
