@@ -110,6 +110,15 @@ const AddToFolderModal: FC<Props> = (props) => {
                                     if (sets.hasOwnProperty(selectedFolder)) {
 
                                         if (sets[selectedFolder].some((str: string) => str.includes(props.id))) return
+                                        
+                                            // Iterate through the folders to find and remove the set ID
+                                            for (const folder in sets) {
+                                                const index = sets[folder].indexOf(props.id);
+                                                if (index > -1) {
+                                                    sets[folder].splice(index, 1); // Remove the set ID from the folder
+                                                    break; // Exit loop after finding and removing the set ID
+                                                }
+                                            }
 
                                         updateDoc(doc(firestore, `/users/${user.uid}`), {
                                             sets: JSON.stringify({...sets, [selectedFolder]: [...sets[selectedFolder], props.id]})
