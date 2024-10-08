@@ -2,7 +2,7 @@
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { FC, useEffect, useState } from "react";
 import { auth, firestore } from "../../../lib/firebase";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { DeleteIcon } from "../../../app/icons"
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -17,6 +17,7 @@ const AddToFolderModal: FC<Props> = (props) => {
 
 
     const router = useRouter()
+    const path = usePathname()
     let [folders, setFolders] = useState<string[]>([])
     let [foldersActive, setFoldersActive] = useState<boolean[]>([])
 
@@ -52,8 +53,8 @@ const AddToFolderModal: FC<Props> = (props) => {
                             <div id="folder-select-container" className="flex gap-3 justify-evenly w-auto mt-5">
                                 {folders.map((folder, i) => (
                                     <div key={i}>
-                                            <button className={`px-3 py-1 bg-red-500 rounded-md font-bold
-                                            ${foldersActive[i] ? "bg-gray-500" : "bg-gray-300"}`}
+                                            <button className={`px-3 py-1 transition ease-in-out rounded-md font-bold
+                                            ${foldersActive[i] ? "bg-gray-400" : "bg-gray-300"}`}
                                             onClick={() => {
                                                 setFoldersActive(foldersActive.map((y, u) => {
                                                     if (u === i) {
@@ -63,7 +64,7 @@ const AddToFolderModal: FC<Props> = (props) => {
                                                     return false
                                                 }))
                                             }}>
-                                                {folder}
+                                                {folder === "default" ? "no folder" : folder}
                                             </button>
                                     </div>
                                 ))}
@@ -102,11 +103,9 @@ const AddToFolderModal: FC<Props> = (props) => {
 
                                     let selectedFolder = folders[foldersActive.indexOf(true)]
 
-
                                     if (sets.hasOwnProperty(selectedFolder)) {
 
                                         if (sets[selectedFolder].some((str: string) => str.includes(props.id))) return
-                                        
                                             // Iterate through the folders to find and remove the set ID
                                             for (const folder in sets) {
                                                 const index = sets[folder].indexOf(props.id);
@@ -128,7 +127,7 @@ const AddToFolderModal: FC<Props> = (props) => {
                                 }
 
                                 try {
-                                    runUpdate()
+                                    await runUpdate()
                                 } catch (e) {
                                     console.error(e)
                                 }
@@ -136,6 +135,11 @@ const AddToFolderModal: FC<Props> = (props) => {
                                 const newState = [...props.state];
                                 newState[props.index] = false; // Set the current modal state to false (close)
                                 props.updateState(newState);
+
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 200); 
+
                             }}
                             className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
                             text-white capitalize transition-colors duration-300 transform bg-purple-600 rounded-md 

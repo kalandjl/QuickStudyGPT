@@ -89,6 +89,7 @@ const Folders: FC<Props> = (props) => {
                                 }   
                             </div>
                     </div>
+                    <div className="pl-4"></div>
                     <div className={`pl-${folder === "default" ? "0" : "4"}`} id="sets-container">
                         {docs[folder]?.length > 0 ? (
                             docs[folder].map((doc: any, y: number) => (
