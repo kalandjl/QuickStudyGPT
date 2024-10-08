@@ -14,8 +14,6 @@ const SideBar: FC<Props> = () => {
     let [reload, setReload] = useState(true)
     let [user] = useAuthState(auth)
 
-    useEffect(() => console.log(reload), [reload])
-
     return (
         <div className="h-full w-full bg-gray-100 px-2 py-4">
             {reload}

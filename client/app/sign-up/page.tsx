@@ -17,7 +17,6 @@ const Page: NextPage = () => {
             <div className="container flex items-center justify-center pt-48 px-6 mx-auto">
                 <div className="w-full grid place-items-center">
                     <form className="w-full max-w-md" onSubmit={(e) => {
-                        console.log('f')
                         e.preventDefault()
                     }}>
 

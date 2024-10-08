@@ -34,15 +34,11 @@ const AddToFolderModal: FC<Props> = (props) => {
 
             setFolders(t)
 
-            console.log(t)
-
             setFoldersActive(t.map(x => false))
         }
 
         doAsync()
     }, [user])
-
-    useEffect(() => {console.log(foldersActive)}, [foldersActive])
 
     return (
         <div className="z-50 w-96">
