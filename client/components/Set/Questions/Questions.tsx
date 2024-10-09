@@ -2,6 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { FC, useEffect, useMemo, useState } from "react";
 import QuestionsOps from "./QuestionsOps/QuestionsOps";
+import Question from "./Question/index";
 
 interface Props {
     id: string
@@ -10,9 +11,10 @@ interface Props {
         question: string
     }}
     notes: string
+    reload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-interface Question {
+interface QuestionT {
     answer: string
     question: string
 }
@@ -31,7 +33,7 @@ const Questions: FC<Props> = (props: Props) => {
     // Set data
     const { content } = props
 
-    const q: {[id: string]: Question} | undefined = useMemo(() => {
+    const q: {[id: string]: QuestionT} | undefined = useMemo(() => {
 
         
         let temp = {}
@@ -51,48 +53,19 @@ const Questions: FC<Props> = (props: Props) => {
                     const parts = q[question].question.split('_______');
 
                     return (
-                        <form 
-                        onSubmit={(e) => {
-                            e.preventDefault()
-                            if (!answers[question]) return
-                            
-                            if (q[question].answer.toLocaleLowerCase() === answers[question].answer.toLocaleLowerCase()) {
-                                
-                                // Correct true
-                                return updateAnswers({...answers, [question]: {answer: answers[question].answer, correct: true}})
-                            }
-                            // Correct false
-                            updateAnswers({...answers, [question]: {...answers[question], correct: false}})
-                        }}
-                        key={i} 
-                        className="my-5 flex">
-
-                            {/* Green or red depending on questions answer */}
-                            <div className={`h-6 w-6 border-2 border-gray-700 mr-10 rounded-md
-                            ${Object.keys(answers).length > 0 ? 
-                            answers[question]?.correct == false || answers[question].correct == true ? 
-                            answers[question].correct ? "bg-green-500" : "bg-red-500"
-                            : "" : ""}`}
-                            id="correct-box"></div>
-
-
-                            <div className={`font-semibold mb-2 text-black`}>
-                                {/* Render the parts of the question and insert the input field */}
-                                {parts[0]}
-                                <input 
-                                type="text" 
-                                className="border-b-2 border-gray-500 outline-none"
-                                placeholder=""
-                                key={`input-${i}`}
-                                onChange={(e) => updateAnswers({...answers, [question]: {answer: e.target.value, correct: null}})
-                                }
-                                />
-                                {parts[1]}
-                                <button type="submit" hidden></button>
-                            </div>
-                        </form>
+                        <Question 
+                        reload={props.reload}
+                        answers={answers} 
+                        setAnswers={updateAnswers} 
+                        question={question} 
+                        parts={parts} 
+                        q={q} 
+                        i={i} 
+                        id={props.id}
+                        questionIndex={question}
+                        key={i} />
                     );
-                    })
+                    }) 
                     : ""
                 }     
                 <QuestionsOps id={props.id} notes={props.notes} prev={props.content} /> 
