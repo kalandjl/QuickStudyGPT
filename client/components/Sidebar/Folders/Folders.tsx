@@ -78,7 +78,7 @@ const Folders: FC<Props> = (props) => {
                         if (y === i) return false
                         return false
                     }))}>
-                            <h2 className="text-2xl font-bold">
+                            <h2 className="text-2xl font-bold grid place-items-center">
                                 {folder === "default" ? "" : folder}
                             </h2>
                             <div className="grid place-items-center w-min">

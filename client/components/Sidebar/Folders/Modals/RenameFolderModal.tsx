@@ -89,7 +89,7 @@ const RenameFolderModal: FC<Props> = (props) => {
 
                                     setTimeout(() => {
                                         props.reload(prev => !prev)
-                                    }, 200); // Adjust the delay as needed 
+                                    }, 500); // Adjust the delay as needed 
                                 }}
                                 className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
                                 text-white capitalize transition-colors duration-300 transform bg-green-600 rounded-md 

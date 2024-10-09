@@ -138,7 +138,7 @@ const AddToFolderModal: FC<Props> = (props) => {
 
                                 setTimeout(() => {
                                     window.location.reload();
-                                }, 200); 
+                                }, 500); 
 
                             }}
                             className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 

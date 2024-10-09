@@ -30,7 +30,7 @@ const DeleteFolderModal: FC<Props> = (props) => {
                             </div>
 
                             <div className="mt-2 text-center">
-                                <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">Delete Set</h3>
+                                <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">Delete Folder</h3>
                                 <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                                     Are you sure you want to delete this folder? Once deleted, it's data is errased and cannot be retrieved
                                 </p>
@@ -81,7 +81,7 @@ const DeleteFolderModal: FC<Props> = (props) => {
 
                                     setTimeout(() => {
                                         props.reload(prev => !prev)
-                                    }, 200); // Adjust the delay as needed 
+                                    }, 500); // Adjust the delay as needed 
                                 }}
                                 className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
                                 text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-md 
