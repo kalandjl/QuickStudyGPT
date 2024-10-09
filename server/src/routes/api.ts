@@ -1,6 +1,6 @@
 
 import express, { Request, Response } from "express"
-import { correctAnswers, getQuestions } from "../func/gpt.js"
+import { correctAnswers, generateQuestions, getQuestions } from "../func/gpt.js"
 import basicMW from "../middleware/basic.js"
 
 const port = 4000
@@ -9,8 +9,8 @@ const app = express()
 // Sets up basic middleware
 basicMW(app)
 
-// Returns GPT response to notes
-app.post('/gpt', async (req: Request, res: Response) => {
+// Returns initial GPT response to notes
+app.post('/gpt-initial', async (req: Request, res: Response) => {
   
     if (!req.body) return res.status(404).send("No prompt")
 
@@ -24,7 +24,26 @@ app.post('/gpt', async (req: Request, res: Response) => {
 
         return res.status(200).send(gptres)
     }
-    
+
+    return res.status(400).send("failure to gpt :(")
+})
+
+// Returns new GPT response to already generated notes
+app.post('/gpt-gen', async (req: Request, res: Response) => {
+
+     
+    if (!req.body) return res.status(404).send("No prompt")
+
+    console.log("Pending gpt response")
+
+    const gptres = (await generateQuestions(req.body.notes, req.body.prev))?.choices[0]
+
+    console.log("Completed")
+
+    if (gptres) {
+
+        return res.status(200).send(gptres)
+    }
 
     return res.status(400).send("failure to gpt :(")
 })

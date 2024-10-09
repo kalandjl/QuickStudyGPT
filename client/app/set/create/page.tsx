@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { ArrowIcon } from "../../../app/icons";
 import { useEffect, useState } from "react";
-import { getGPT } from "../../../lib/gpt";
+import { getGPT, getGPTInitial } from "../../../lib/gpt";
 import { usePathname } from 'next/navigation'
 import { useRouter } from "next/navigation";
 import Loading from "../../../components/Loading";
@@ -62,39 +62,11 @@ const Page: NextPage = () => {
                                 
                             setLoading(true)
 
-                            const res = await getGPT(notes)
-
-                            const mes =  JSON.stringify(res.message.content)
-
-
-                            // Use regex to make GPT response parsable
-                            let cleanedMes = mes
-                                .replace("json", "")
-                                .replace(/\\n/g, '')      
-                                .replace(/\\\"/g, '"')       
-                                .replace(/^\s+/g, '')  
-                                .replace(/\s+$/g, '') 
-                                .replace(/\\/g, '')      
-                                .replace(/^"+|"+$/g, '')
-                                .replace(/```/g, '');
-
-                            try {
-                                JSON.parse(cleanedMes)
-
-                            } catch (e) {
-
-                                return 
-                            }
-
-                            const doc = await addDoc(collection(firestore, "/sets"), {
-                                "uid": user.uid,
-                                "title": "title",
-                                "content": JSON.parse(cleanedMes)
-                            })
+                            const id = await getGPTInitial(notes, user.uid)
 
                             setLoading(false)
 
-                            router.push(`/set/${doc.id}`)
+                            router.push(`/set/${id}`)
                         }}>
                             <div
                             id="button-inner"

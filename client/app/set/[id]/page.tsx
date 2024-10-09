@@ -7,6 +7,7 @@ import { useState } from "react"
 import Title from "../../../components/Set/Title"
 import Questions from "../../../components/Set/Questions"
 import SetOps from "../../../components/Set/SetOps"
+import QuestionsOps from "../../../components/Set/Questions/QuestionsOps/QuestionsOps"
 
 
 const Home: NextPage<{params: any}> = async ({ params }) => {
@@ -44,7 +45,7 @@ const Home: NextPage<{params: any}> = async ({ params }) => {
                 </section>
                 <section className="col-span-8" 
                 id="questions-sect">
-                    <Questions content={set.content} />
+                    <Questions content={set.content} id={id} notes={set.notes} />
                 </section>
             </main> 
         </>

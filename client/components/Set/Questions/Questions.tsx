@@ -1,12 +1,15 @@
 "use client"
 import { useSearchParams } from "next/navigation";
 import { FC, useEffect, useMemo, useState } from "react";
+import QuestionsOps from "./QuestionsOps/QuestionsOps";
 
 interface Props {
+    id: string
     content: {[x:string]: {
         answer: string
         question: string
     }}
+    notes: string
 }
 
 interface Question {
@@ -91,7 +94,8 @@ const Questions: FC<Props> = (props: Props) => {
                     );
                     })
                     : ""
-                }      
+                }     
+                <QuestionsOps id={props.id} notes={props.notes} prev={props.content} /> 
             </div>
         </>
     )
