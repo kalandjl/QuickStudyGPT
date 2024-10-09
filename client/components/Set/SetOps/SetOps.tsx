@@ -5,8 +5,8 @@ import { FolderIcon } from "../../../app/icons";
 import { deleteDoc, doc } from "firebase/firestore";
 import { firestore } from "../../../lib/firebase";
 import Modal from "../../Modal";
-import DeleteModal from "./DeleteModal";
-import AddToFolderModal from "./AddToFolderModal";
+import AddToFolderModal from "./Modals/AddToFolderModal";
+import DeleteModal from "./Modals/DeleteModal";
 
 interface Props {
     id: string

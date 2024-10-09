@@ -1,9 +1,9 @@
 "use client"
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { FC, useEffect, useState } from "react";
-import { auth, firestore } from "../../../lib/firebase";
+import { auth, firestore } from "../../../../lib/firebase";
 import { usePathname, useRouter } from "next/navigation";
-import { DeleteIcon } from "../../../app/icons"
+import { DeleteIcon } from "../../../../app/icons"
 import { useAuthState } from "react-firebase-hooks/auth";
 
 interface Props {

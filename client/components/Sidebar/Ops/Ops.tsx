@@ -5,8 +5,8 @@ import { FolderIcon } from "../../../app/icons";
 import { deleteDoc, doc } from "firebase/firestore";
 import { auth, firestore } from "../../../lib/firebase";
 import Modal from "../../Modal";
-import NewFolderModal from "./NewFolderModal";
 import { useAuthState } from "react-firebase-hooks/auth";
+import NewFolderModal from "./Modals/NewFolderModal";
 
 
 interface Props {

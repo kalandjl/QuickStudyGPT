@@ -1,11 +1,11 @@
 "use client"
 import { FC, useState } from "react";
-import { DeleteIcon, EditIcon } from "../../../app/icons";
-import DeleteFolderModal from "./DeleteFolderModal";
-import Modal from "../../Modal";
-import { auth } from "../../../lib/firebase";
+import { DeleteIcon, EditIcon } from "../../../../app/icons";
+import Modal from "../../../Modal";
+import { auth } from "../../../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import RenameFolderModal from "./RenameFolderModal";
+import RenameFolderModal from "../Modals/RenameFolderModal";
+import DeleteFolderModal from "../Modals/DeleteFolderModal";
 
 interface Props {
     folder: string

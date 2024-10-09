@@ -4,7 +4,7 @@ import { auth, firestore } from "../../../lib/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
-import FolderOps from "./FolderOps";
+import FolderOps from "./Ops/FolderOps";
 
 interface Props {
     reload: React.Dispatch<React.SetStateAction<boolean>>

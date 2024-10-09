@@ -1,9 +1,9 @@
 "use client"
 import { deleteDoc, doc } from "firebase/firestore";
 import { FC } from "react";
-import { firestore } from "../../../lib/firebase";
+import { firestore } from "../../../../lib/firebase";
 import { useRouter } from "next/navigation";
-import { DeleteIcon } from "../../../app/icons"
+import { DeleteIcon } from "../../../../app/icons"
 
 interface Props {
     updateState: React.Dispatch<React.SetStateAction<boolean[]>>
