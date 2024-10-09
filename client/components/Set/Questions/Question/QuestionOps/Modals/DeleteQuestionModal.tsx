@@ -28,9 +28,9 @@ const DeleteQuestionModal: FC<Props> = (props) => {
                             </div>
 
                             <div className="mt-2 text-center">
-                                <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">Delete Folder</h3>
+                                <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">Delete Question</h3>
                                 <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                    Are you sure you want to delete this folder? Once deleted, it's data is errased and cannot be retrieved
+                                    Are you sure you want to delete this question? Once deleted, it's data is errased and cannot be retrieved
                                 </p>
                             </div>
                         </div>

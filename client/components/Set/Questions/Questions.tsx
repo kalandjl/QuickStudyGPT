@@ -29,6 +29,20 @@ const Questions: FC<Props> = (props: Props) => {
 
     const t = useSearchParams()
     let [answers, updateAnswers] = useState<{[x:string]: Answer}>({})
+    
+    let score = useMemo<number[]>(() => {
+
+        // Num of correct
+        let i = 0
+        Object.keys(answers).forEach((x) => i += answers[x].correct ? 1 : 0)
+
+        // Total answered
+        let y = 0
+        Object.keys(answers).forEach((x) => y += answers[x].correct === true || answers[x].correct === false ? 1 : 0)
+
+        console.log(answers)
+        return [i, y]
+    }, [answers])
 
     // Set data
     const { content } = props
@@ -47,6 +61,9 @@ const Questions: FC<Props> = (props: Props) => {
     return (
         <>
             <div className="px-64 pt-10">
+                <div id="score-wrap" className="font-bold text-xl">
+                    {score ? `Score: ${Math.floor(score[0] / score[1] * 100)}% (${score[0]}/${score[1]})` : ""}
+                </div>
                 {q ? 
                     Object.keys(q).map((question, i: number) => {
                     // Split the question around the "_______" and render parts
