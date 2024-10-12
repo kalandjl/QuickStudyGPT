@@ -30,9 +30,14 @@ const Question: FC<Props> = (props) => {
     let [answerRevealed, setAnswerRevealed] = useState<boolean>(false)
 
     useEffect(() => {
-        const initialValue = answerRevealed ? q[question].answer.toLocaleLowerCase() : "";
-        console.log("Initial value:", initialValue);
-    }, [answerRevealed, q, question]); 
+        if (answerRevealed) {
+            // Update the answer in the state with the correct answer when revealed
+            setAnswers((prevAnswers) => ({
+                ...prevAnswers,
+                [question]: { answer: q[question].answer.toLocaleLowerCase(), correct: false },
+            }));
+        }
+    }, [answerRevealed, q, question, setAnswers]);
 
     return (
         <>  
@@ -75,19 +80,26 @@ const Question: FC<Props> = (props) => {
                             {parts[0]}
                             <input
                             type="text"
-                            defaultValue={answerRevealed ? q[question].answer.toLocaleLowerCase() : ""}
+                            value={answerRevealed 
+                                ? q[question].answer.toLocaleLowerCase() 
+                                : answers[question]?.answer || ""
+                            }
                             className={`border-b-2 border-gray-500 outline-none pl-1 ${
                                 answerRevealed ? "text-red-600" : "text-black"
                             }`}
-                            style={{ width: `${q[question].answer.toLocaleLowerCase().split("").length * 10}px` }}
+                            style={{ width: `${q[question].answer.toLocaleLowerCase().length * 10}px` }}
                             placeholder=""
                             key={`input-${i}`}
-                            onChange={(e) =>
-                                setAnswers({
-                                ...answers,
-                                [question]: { answer: e.target.value, correct: null },
-                                })
-                            }
+                            onChange={(e) => {
+
+                                setAnswerRevealed(false)
+                                if (!answerRevealed) {
+                                    return setAnswers({
+                                        ...answers,
+                                        [question]: { answer: e.target.value, correct: null },
+                                    });
+                                }
+                            }}
                             />
                             {parts[1]}
                             <button type="submit" hidden></button>
