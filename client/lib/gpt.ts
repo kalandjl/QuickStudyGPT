@@ -1,7 +1,7 @@
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "./firebase";
 
-export const getGPT = async (body: {[x: string]: any}, op: string) => {
+export const getGPT = async (body: {notes: string, prev?: string, questions: number}, op: string) => {
 
     const req = await fetch(`http://localhost:4000/gpt-${op}`,
         {
@@ -25,12 +25,11 @@ export const getGPT = async (body: {[x: string]: any}, op: string) => {
     return null
 }
 
-export const getGPTInitial = async (notes: string, uid: string): Promise<string | undefined> => {
+export const getGPTInitial = async (notes: string, uid: string, questions: number): Promise<string | undefined> => {
 
-    const res = await getGPT({notes: notes}, 'initial')
+    const res = await getGPT({notes: notes, questions: questions}, 'initial')
 
     const mes =  JSON.stringify(res.message.content)
-
 
     // Use regex to make GPT response parsable
     let cleanedMes = mes
@@ -65,7 +64,7 @@ export const generateGPT = async (notes: string, id: string): Promise<void> => {
 
     const content = await (await getDoc(doc(firestore, `/sets/${id}`))).data()?.content
     
-    const res = await getGPT({notes: notes, prev: content}, 'gen')
+    const res = await getGPT({notes: notes, prev: content, questions: 10}, 'gen')
 
     const mes =  JSON.stringify(res.message.content)
 

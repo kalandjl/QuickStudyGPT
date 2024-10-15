@@ -15,8 +15,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 const Page: NextPage = () => {
 
-    let [notes, setNotes] = useState("")
-    let [loading, setLoading] = useState(false)
+    let [notes, setNotes] = useState<string>("")
+    let [questions, setQuestions] = useState<number>(10)
+    let [loading, setLoading] = useState<boolean>(false)
 
     let [user] = useAuthState(auth)
 
@@ -47,6 +48,34 @@ const Page: NextPage = () => {
                     focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 
                     dark:text-gray-700 dark:focus:border-blue-300"></textarea>
                 </div>
+                <div id="questions" className="w-4/5">
+                    <div id="questions-inner" className="w-1/3 my-7">
+                        <label 
+                        htmlFor="question"
+                        className="block mb-3 font-bold text-gray-500 dark:text-gray-300">
+                            # of Questions
+                        </label>
+                        <input 
+                        type="number" 
+                        id="number-input" 
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                        focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-1/3" 
+                        placeholder="10"
+                        min={5}
+                        max={20}
+                        onChange={e => {
+                            try {
+                                
+                                let x = parseInt(e.currentTarget.value)
+                                setQuestions(x)
+                            } catch (e) {
+                                alert("Not number")
+                            }
+                        }}
+                        required />
+                    </div>
+                </div>
                 <div id="section-button" className="w-4/5 pl-10">
                     <div id="button-wrap">
                         <button 
@@ -62,7 +91,7 @@ const Page: NextPage = () => {
                                 
                             setLoading(true)
 
-                            const id = await getGPTInitial(notes, user.uid)
+                            const id = await getGPTInitial(notes, user.uid, questions)
 
                             setLoading(false)
 
@@ -72,7 +101,7 @@ const Page: NextPage = () => {
                             id="button-inner"
                             className="grid grid-flow-col">
                                 <Link href="/set/create">
-                                    Quiz Me
+                                    Create Set
                                 </Link>
                                 <div className="pl-3">
                                     <ArrowIcon />

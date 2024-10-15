@@ -28,22 +28,22 @@ const Home = () => {
                         </Heading>
                         <div id="section-button" className="mt-10">
                             <div id="button-wrap" className="w-3/5">
-                                <button 
-                                className="w-full px-10 py-4 mt-6 tracking-wider text-white 
-                                uppercase transition-colors duration-300 transform bg-teal-600 
-                                rounded-lg lg:w-auto hover:bg-teal-500 focus:outline-none 
-                                focus:bg-teal-500 font-extrabold text-lg">
-                                    <div
-                                    id="button-inner"
-                                    className="grid grid-flow-col">
-                                        <Link href="/set/create" className="hover:underline">
-                                            Start Learning
-                                        </Link>
-                                        <div className="pl-3">
-                                            <ArrowIcon />
+                                <Link href="/set/create" className="hover:underline">
+                                    <button 
+                                    className="w-full px-10 py-4 mt-6 tracking-wider text-white 
+                                    uppercase transition-colors duration-300 transform bg-teal-600 
+                                    rounded-lg lg:w-auto hover:bg-teal-500 focus:outline-none 
+                                    focus:bg-teal-500 font-extrabold text-lg">
+                                        <div
+                                        id="button-inner"
+                                        className="grid grid-flow-col hover:underline">
+                                                Make your first study set
+                                            <div className="pl-3">
+                                                <ArrowIcon />
+                                            </div>
                                         </div>
-                                    </div>
-                                </button>
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
