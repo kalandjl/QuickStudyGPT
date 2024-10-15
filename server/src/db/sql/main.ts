@@ -1,4 +1,4 @@
-import { findUser } from "./mock.js"
+import { findUser } from "./mock.ts"
 
 export const verifyUser = async (params: {email: string, password: string}) => {
 

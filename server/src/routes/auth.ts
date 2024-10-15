@@ -1,10 +1,10 @@
 import express, { Request, Response } from "express"
-import { LogInReqBody } from "../types/types.js"
-import { catchError } from "../misc/catch.js"
-import { verifyUser } from "../db/sql/main.js"
-import { authenticateRefreshToken, generateAccessToken, generateRefreshToken } from "../auth/index.js"
-import basicMW from "../middleware/basic.js"
-import doRedis from "../db/redis/index.js"
+import { LogInReqBody } from "../types/types.ts"
+import { catchError } from "../misc/catch.ts"
+import { verifyUser } from "../db/sql/main.ts"
+import { authenticateRefreshToken, generateAccessToken, generateRefreshToken } from "../auth/index.ts"
+import basicMW from "../middleware/basic.ts"
+import doRedis from "../db/redis/index.ts"
 
 const port = 5000
 const app = express()

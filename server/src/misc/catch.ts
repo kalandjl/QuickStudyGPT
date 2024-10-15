@@ -1,5 +1,5 @@
-import { errors } from "./errors.js";
-import { CatchResObj, ErrorObject, UserObj } from "../types/types.js"
+import { errors } from "./errors.ts";
+import { CatchResObj, ErrorObject, UserObj } from "../types/types.ts"
 
 interface A{
     member:string;
