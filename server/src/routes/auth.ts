@@ -6,7 +6,7 @@ import { authenticateRefreshToken, generateAccessToken, generateRefreshToken } f
 import basicMW from "../middleware/basic.ts"
 import doRedis from "../db/redis/index.ts"
 
-const port = 5000
+const port = 4001
 const app = express()
 
 // Sets up basic middleware
