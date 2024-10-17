@@ -2,6 +2,9 @@
 import Link from "next/link"
 import { FC } from "react"
 import NavAccountDiv from "./NavAccountDiv"
+import Image from "next/image"
+import f from "../../app/favicon.ico"
+import logoPic from "../../public/logo.png"
 
 
 interface Props {
@@ -18,7 +21,14 @@ const Nav: FC<Props> = (props: Props) => {
             className="px-48 h-16">
                 <div id="content-flex" className="h-full flex justify-between">
                     <div id="logo-wrap" className="px-6 grid place-items-center h-full">
-                        <div id="logo" className="h-10 w-10 bg-teal-500 opacity-50"></div>
+                        <div id="logo" className="h-10 w-10 px-2 py-2 bg-teal-500 opacity-50 rounded-md">
+                            <div id="logo-inner">
+                                <Image src={logoPic} 
+                                alt="logo"
+                                width={100} 
+                                height={10} />
+                            </div>
+                        </div>
                     </div>
                     <div id="links-wrap" className="h-full flex flex-row items-center gap-20 pr-20">
                         <Link href="/">

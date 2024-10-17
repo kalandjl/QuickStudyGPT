@@ -60,7 +60,8 @@ const Folders: FC<Props> = (props) => {
     }, [docs])
 
 
-    if (loading) return <div>Loading...</div> // Show a loading state while data is being fetched
+    if (loading && !user) return <div className="text-slate-300">Please create account or sign in</div> // Show a loading state while data is being fetched
+    if (loading && user) return <div className="text-slate-300">Loading...</div> // Show a loading state while data is being fetched
 
     return (
         <div className="grid gap-2 grid-flow-row" id="folders-container">

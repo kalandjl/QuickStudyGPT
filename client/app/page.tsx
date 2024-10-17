@@ -4,11 +4,17 @@ import { getCorrections, getGPT } from "../lib/gpt"
 import { Button, FormLabel, Heading, Input, Spinner, Stack, Textarea, FormControl } from "@chakra-ui/react"
 import { ArrowIcon, NotesIcon, QuizIcon } from "../app/icons"
 import Link from "next/link"
+import Image from "next/image"
 
 const Home = () => {
 
     return (
         <>
+            <Image 
+            src="/../public/logo.png"
+            height={100}
+            width={10}
+            alt="a" />
             <header
             id="header"
             className="px-10 pt-40 pb-16">

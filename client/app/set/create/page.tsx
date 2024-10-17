@@ -26,8 +26,8 @@ const Page: NextPage = () => {
     return (
         <>
             <Loading loading={loading} />
-            <div id="header-wrap" className="px-40 py-20">
-                <header className="font-extrabold text-5xl text-slate-800">
+            <div id="header-wrap" className="px-32 py-20">
+                <header className="font-extrabold text-5xl text-stone-300">
                     Create Set
                 </header>
             </div>
@@ -35,32 +35,30 @@ const Page: NextPage = () => {
                 <div id="textarea" className="w-4/5">
                     <label 
                     htmlFor="Notes" 
-                    className="block text-xl mb-5 font-bold text-gray-500 dark:text-gray-300">
+                    className="block text-xl mb-5 font-bold text-stone-300 dark:text-gray-300">
                         Notes
                     </label>
                     <textarea 
                     onChange={(e) => {setNotes(e.target.value)}}
                     placeholder="Copy & Paste Notes Here" 
-                    className="block  mt-2 w-full placeholder-gray-500/70 font-bold
-                     rounded-lg border border-gray-500
-                    bg-white px-4 h-64 py-2.5 text-gray-700 focus:border-blue-400
+                    className="block  mt-2 w-full placeholder-stone-400/70 font-bold
+                    rounded-lg border border-gray-500 text-stone-300
+                    bg-stone-800 px-4 h-64 py-2.5 focus:border-blue-400
                     focus:outline-none focus:ring focus:ring-green-300 
-                    focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 
-                    dark:text-gray-700 dark:focus:border-blue-300"></textarea>
+                    focus:ring-opacity-40"></textarea>
                 </div>
                 <div id="questions" className="w-4/5">
                     <div id="questions-inner" className="w-1/3 my-7">
                         <label 
                         htmlFor="question"
-                        className="block mb-3 font-bold text-gray-500 dark:text-gray-300">
+                        className="block mb-3 font-bold text-gray-300 dark:text-gray-300">
                             # of Questions
                         </label>
                         <input 
                         type="number" 
                         id="number-input" 
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                        focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-1/3" 
+                        className="bg-stone-800 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                        focus:border-blue-500 block p-2.5 w-1/3 placeholder-stone-400/70" 
                         placeholder="10"
                         min={5}
                         max={20}
@@ -76,7 +74,7 @@ const Page: NextPage = () => {
                         required />
                     </div>
                 </div>
-                <div id="section-button" className="w-4/5 pl-10">
+                <div id="section-button" className="w-4/5 pl-6">
                     <div id="button-wrap">
                         <button 
                         className="w-full px-10 py-4 mt-6 tracking-wider text-white 
