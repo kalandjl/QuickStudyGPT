@@ -11,14 +11,14 @@ const Home = () => {
         <>
             <header
             id="header"
-            className="px-10 pt-40 pb-16 bg-white">
+            className="px-10 pt-40 pb-16">
                 <div  
                 id="heading-wrap"
                 className="grid place-items-center w-3/4">
                     <div id="text-wrap">
                         <h1 
                         id="heading"
-                        className="text-6xl text-slate-700 font-extrabold w-3/4"
+                        className="text-6xl text-gray-300 font-extrabold w-3/4"
                         >
                         Quick Study GPT
                         </h1>
@@ -51,7 +51,7 @@ const Home = () => {
             </header>
             <main 
             id="main-division"
-            className="px-40 py-5 bg-white grid">
+            className="px-40 py-5 grid">
 
             </main>
         </>

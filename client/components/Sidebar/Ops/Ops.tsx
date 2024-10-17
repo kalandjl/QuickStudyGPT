@@ -22,7 +22,7 @@ const ops: {jsx: React.ReactNode, modal: ((
     index: number,
     reload: React.Dispatch<React.SetStateAction<boolean>>) => React.ReactNode)}[] = [
     { "jsx": <>
-        <CreateFolderIcon fill="#000000" />
+        <CreateFolderIcon fill="#d6d3d1" />
      </>,
      "modal": (
         uid: string,
@@ -58,7 +58,7 @@ const SetOps: FC<Props> = (props: Props) => {
                         <div 
                         className={`
                         transition ease-in-out
-                        hover:scale-110 hover:cursor-pointer hover:bg-gray-300
+                        hover:scale-110 hover:cursor-pointer hover:bg-stone-700
                         flex gap-2 px-4 py-2 rounded-lg font-bold text-white`}
                         onClick={(e) => setModalsTrack(modalsTrack.map((y, u) => {
                             if (u === i) {

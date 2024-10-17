@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang='en'>
-            <body style={{backgroundColor: "#ffffff"}} className='h-screen'>
+            <body className="h-screen bg-stone-900">
                 <Nav />
                 <Providers>
                     <div className="grid grid-flow-row grid-cols-6 h-screen">
@@ -32,6 +32,7 @@ export default function RootLayout({
                         </div>
                     </div>
                 </Providers>
+                
             </body>
         </html>
     )

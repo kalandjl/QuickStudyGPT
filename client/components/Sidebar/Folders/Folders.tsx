@@ -67,7 +67,7 @@ const Folders: FC<Props> = (props) => {
             {Object.keys(docs).length > 0 ? (
             Object.keys(docs).map((folder, i) => (
                 <div key={i}>
-                    <div className={`flex justify-between w-full rounded-md hover:bg-gray-300 
+                    <div className={`flex justify-between w-full rounded-md hover:bg-stone-700 
                     transition ease-in-out px-2`}
                     id="folder-flex"
                     onMouseEnter={() => setHoverTrack(hoverTrack.map((p, y) => {
@@ -78,7 +78,7 @@ const Folders: FC<Props> = (props) => {
                         if (y === i) return false
                         return false
                     }))}>
-                            <h2 className="text-2xl font-bold grid place-items-center">
+                            <h2 className="text-2xl font-bold grid place-items-center text-slate-300">
                                 {folder === "default" ? "" : folder}
                             </h2>
                             <div className="grid place-items-center w-min">
@@ -94,17 +94,17 @@ const Folders: FC<Props> = (props) => {
                         {docs[folder]?.length > 0 ? (
                             docs[folder].map((doc: any, y: number) => (
                             <Link href={`/set/${doc.id}`} key={y}>
-                                <p className="font-semibold hover:underline">{doc.title}</p>
+                                <p className="font-semibold hover:underline text-slate-400">{doc.title}</p>
                             </Link>
                             ))
                         ) : (
-                            <p className="text-gray-500">No documents available</p>
+                            <p className="text-slate-400">No documents available</p>
                         )}
                     </div>
                 </div>
             ))
             ) : (
-            <p className="text-gray-500">No folders found</p>
+            <p className="text-slate-200">No folders found</p>
             )}
         </div>
     )

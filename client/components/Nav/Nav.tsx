@@ -9,13 +9,13 @@ interface Props {
 }
 const Nav: FC<Props> = (props: Props) => {
 
-    const linksStyle = "text-black hover:cursor-pointer font-bold text-lg"
+    const linksStyle = "text-slate-300 hover:cursor-pointer font-bold text-lg"
 
     return (
         <>
             <nav
             id="navbar"
-            className="px-48 h-16 bg-gray-300">
+            className="px-48 h-16">
                 <div id="content-flex" className="h-full flex justify-between">
                     <div id="logo-wrap" className="px-6 grid place-items-center h-full">
                         <div id="logo" className="h-10 w-10 bg-teal-500 opacity-50"></div>
@@ -42,7 +42,7 @@ const Nav: FC<Props> = (props: Props) => {
                             </p>
                         </Link>
                     </div>
-                    <div id="account-wrap">
+                    <div id="account-wrap" className="grid place-items-center">
                         <NavAccountDiv /> 
                     </div>
                 </div>

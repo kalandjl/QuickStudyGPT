@@ -27,7 +27,7 @@ interface ModalProps {
 const ops: {
     jsx: React.ReactNode, modal: (props: ModalProps) => React.ReactNode}[] = [
     { "jsx": <>
-        <EditIcon fill="#000000" />
+        <EditIcon fill="#d6d3d1" />
      </>,
      "modal": (props) => {
         return (
@@ -43,7 +43,7 @@ const ops: {
      )}
     },
     { "jsx": <>
-        <DeleteIcon fill="#000000" />
+        <DeleteIcon fill="#d6d3d1" />
      </>,
      "modal": (props) => {
         return (
