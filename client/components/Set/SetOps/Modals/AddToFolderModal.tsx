@@ -20,6 +20,7 @@ const AddToFolderModal: FC<Props> = (props) => {
     const path = usePathname()
     let [folders, setFolders] = useState<string[]>([])
     let [foldersActive, setFoldersActive] = useState<boolean[]>([])
+    let [initialFolder, setInitialFolder] = useState<string | undefined>(undefined)
 
     let [user] = useAuthState(auth)
 
@@ -29,17 +30,30 @@ const AddToFolderModal: FC<Props> = (props) => {
 
             if (!user) return
 
-            const t = Object.keys(JSON.parse((await getDoc(doc(firestore, `/users/${user.uid}`))).data()?.sets))
+            const t = JSON.parse((await getDoc(doc(firestore, `/users/${user.uid}`))).data()?.sets)
 
             if (!t) return
 
-            setFolders(t)
+            setFolders(Object.keys(t))
 
-            setFoldersActive(t.map(x => false))
+            setFoldersActive(Object.keys(t).map((x: string) => {
+
+                // If set id is in folder
+                if (t[x].includes(props.id)) {
+
+                    setInitialFolder(x)
+                    return true
+                }
+
+                // If not
+                return false
+            }))
         }
 
         doAsync()
     }, [user])
+
+    useEffect(() => console.log(initialFolder === folders[foldersActive.indexOf(true)]), [initialFolder])
 
     return (
         <>
@@ -51,7 +65,7 @@ const AddToFolderModal: FC<Props> = (props) => {
                             {folders.map((folder, i) => (
                                 <div key={i}>
                                         <button className={`px-3 py-1 transition ease-in-out rounded-md font-bold
-                                        ${foldersActive[i] ? "bg-gray-400" : "bg-gray-300"}`}
+                                        ${foldersActive[i] ? "bg-stone-500" : "bg-stone-300"}`}
                                         onClick={() => {
                                             setFoldersActive(foldersActive.map((y, u) => {
                                                 if (u === i) {
@@ -70,7 +84,7 @@ const AddToFolderModal: FC<Props> = (props) => {
                 </div>
 
                 <div className="mt-16 grid place-items-center">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-10">
                         <button 
                         onClick={() => {
 
@@ -78,10 +92,10 @@ const AddToFolderModal: FC<Props> = (props) => {
                             newState[props.index] = false; // Set the current modal state to false (close)
                             props.updateState(newState);
                         }}
-                        className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium 
+                        className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm
                     tracking-wide capitalize transition-colors duration-300 rounded-md sm:mt-0 sm:w-auto sm:mx-2 
                     hover:bg-stone-400 focus:outline-none focus:ring focus:ring-gray-300 
-                    focus:ring-opacity-40 bg-stone-300">
+                    focus:ring-opacity-40 bg-stone-300 font-bold">
                             Cancel
                         </button>
 
@@ -92,11 +106,15 @@ const AddToFolderModal: FC<Props> = (props) => {
 
                                 if (!user) return 
 
+                                let selectedFolder = folders[foldersActive.indexOf(true)]
+
+                                if (selectedFolder === initialFolder) return 
+                                    
+
                                 const sets = JSON.parse((await getDoc(doc(firestore, `/users/${user.uid}`))).data()?.sets ?? {})
                                 
                                 if (!sets) return 
 
-                                let selectedFolder = folders[foldersActive.indexOf(true)]
 
                                 if (sets.hasOwnProperty(selectedFolder)) {
 
@@ -136,10 +154,13 @@ const AddToFolderModal: FC<Props> = (props) => {
                             }, 500); 
 
                         }}
-                        className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
-                        text-white capitalize transition-colors duration-300 transform bg-purple-600 rounded-md 
-                        sm:w-auto sm:mt-0 hover:bg-purple-800 focus:outline-none focus:ring focus:ring-red-400 
-                        focus:ring-opacity-40">
+                        className={`hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm tracking-wide 
+                        text-white capitalize transition-colors duration-300 transform rounded-md 
+                        sm:w-auto sm:mt-0 focus:outline-none focus:ring focus:ring-red-400 
+                        focus:ring-opacity-40 font-bold 
+                        ${initialFolder === folders[foldersActive.indexOf(true)] ? "bg-purple-300 hover:cursor-not-allowed"  : "bg-purple-600"
+                        }`}>
+                            {initialFolder === folders[foldersActive.indexOf(true)]}
                             Add
                         </button>
                     </div>

@@ -6,7 +6,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { auth, firestore } from "../../../lib/firebase";
 import Modal from "../../Modal";
 import { useAuthState } from "react-firebase-hooks/auth";
-import NewFolderModal from "./Modals/NewFolderModal";
+import CreateFolderModal from "./Modals/CreateFolderModal";
 
 
 interface Props {
@@ -33,7 +33,7 @@ const ops: {jsx: React.ReactNode, modal: ((
         reload: React.Dispatch<React.SetStateAction<boolean>>) => {
         return (
         <Modal state={state}>
-            <NewFolderModal updateState={updateState} state={stateArr} index={index} uid={uid} reload={reload} />
+            <CreateFolderModal updateState={updateState} state={stateArr} index={index} uid={uid} reload={reload} />
         </Modal>
      )}
     },

@@ -13,7 +13,7 @@ const Modal: FC<Props> = (props) => {
         <>
             <div 
             style={{backgroundColor: "rgba(0 0 0 / 0.3)"}}
-            className={`top-0 bottom-0 left-0 right-0 grid place-items-center z-10
+            className={`top-0 bottom-0 left-0 right-0 grid place-items-center z-10 cursor-default
             ${props.state ? "fixed" : "hidden"}`}>
                 {props.unique ? 
                 props.children :
@@ -23,7 +23,7 @@ const Modal: FC<Props> = (props) => {
 
                         <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom  
                         transition-all transform rounded-lg rtl:text-right dark:bg-gray-900  
-                        sm:my-8 sm:align-middle sm:w-full sm:p-6 bg-zinc-950 shadow-inner shadow-zinc-700">
+                        sm:my-8 sm:align-middle sm:w-full sm:p-6 bg-stone-900 shadow-inner shadow-zinc-700">
                             {props.children}
                         </div>
                     </div>

@@ -12,7 +12,7 @@ interface Props {
     id: string
 }
 
-const DeleteModal: FC<Props> = (props) => {
+const DeleteSetModal: FC<Props> = (props) => {
 
 
     const router = useRouter()
@@ -77,4 +77,4 @@ const DeleteModal: FC<Props> = (props) => {
     )
 }
 
-export default DeleteModal
+export default DeleteSetModal

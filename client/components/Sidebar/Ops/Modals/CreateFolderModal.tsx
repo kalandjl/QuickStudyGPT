@@ -11,7 +11,7 @@ interface Props {
     reload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NewFolderModal: FC<Props> = (props) => {
+const CreateFolderModal: FC<Props> = (props) => {
 
     let [folderName, setFolderName] = useState<string>("")
 
@@ -91,4 +91,4 @@ const NewFolderModal: FC<Props> = (props) => {
     )
 }
 
-export default NewFolderModal
+export default CreateFolderModal

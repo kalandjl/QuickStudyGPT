@@ -28,7 +28,7 @@ const RenameFolderModal: FC<Props> = (props) => {
                             <input
                             placeholder="New Folder Name"
                             className="mt-2 text-sm text-gray-500 dark:text-gray-400 w-full rounded-md
-                            px-2 py-1 ring-2 ring-gray-400 bg-transparent
+                            px-2 py-1 ring-2 ring-stone-600 bg-transparent
                             focus:ring-green-600 focus:ring-2"
                             onChange={e => setNewFolder(e.currentTarget.value)} />
                         </div>
@@ -47,8 +47,8 @@ const RenameFolderModal: FC<Props> = (props) => {
                         }}
                         className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium 
                         tracking-wide capitalize transition-colors duration-300 rounded-md sm:mt-0 sm:w-auto sm:mx-2 
-                        hover:bg-stone-400 focus:outline-none focus:ring focus:ring-gray-300 
-                        focus:ring-opacity-40 bg-stone-300">
+                        hover:bg-stone-500 focus:outline-none focus:ring focus:ring-gray-300 
+                        focus:ring-opacity-40 bg-stone-400">
                             Cancel
                         </button>
 
@@ -83,8 +83,8 @@ const RenameFolderModal: FC<Props> = (props) => {
                             }, 500); // Adjust the delay as needed 
                         }}
                         className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
-                        text-white capitalize transition-colors duration-300 transform bg-green-600 rounded-md 
-                        sm:w-auto sm:mt-0 hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 
+                        text-white capitalize transition-colors duration-300 transform bg-green-800 rounded-md 
+                        sm:w-auto sm:mt-0 hover:bg-green-900 focus:outline-none focus:ring focus:ring-green-300 
                         focus:ring-opacity-40">
                             Update
                         </button>

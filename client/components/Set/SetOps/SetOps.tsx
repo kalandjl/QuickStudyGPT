@@ -6,7 +6,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { firestore } from "../../../lib/firebase";
 import Modal from "../../Modal";
 import AddToFolderModal from "./Modals/AddToFolderModal";
-import DeleteModal from "./Modals/DeleteModal";
+import DeleteSetModal from "./Modals/DeleteSetModal";
 
 interface Props {
     id: string
@@ -29,7 +29,7 @@ const ops: {jsx: React.ReactNode, color: string, weight: number, modal: ((id: st
         index: number) => {
         return (
         <Modal state={state}>
-            <DeleteModal updateState={updateState} state={stateArr} index={index} id={id} />
+            <DeleteSetModal updateState={updateState} state={stateArr} index={index} id={id} />
         </Modal>
      )}
     },
