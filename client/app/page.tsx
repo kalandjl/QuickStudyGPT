@@ -10,17 +10,12 @@ const Home = () => {
 
     return (
         <>
-            <Image 
-            src="/../public/logo.png"
-            height={100}
-            width={10}
-            alt="a" />
             <header
             id="header"
             className="px-10 pt-40 pb-16">
                 <div  
                 id="heading-wrap"
-                className="grid place-items-center w-3/4">
+                className="pl-48 w-3/4">
                     <div id="text-wrap">
                         <h1 
                         id="heading"

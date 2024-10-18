@@ -18,7 +18,7 @@ const Nav: FC<Props> = (props: Props) => {
         <>
             <nav
             id="navbar"
-            className="px-48 h-16">
+            className="px-48 h-16 bg-stone-950">
                 <div id="content-flex" className="h-full flex justify-between">
                     <div id="logo-wrap" className="px-6 grid place-items-center h-full">
                         <div id="logo" className="h-10 w-10 px-2 py-2 bg-teal-500 opacity-50 rounded-md">

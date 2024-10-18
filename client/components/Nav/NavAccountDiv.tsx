@@ -35,7 +35,11 @@ const NavAccountDiv:FC<Props> = (props: Props) => {
 
                     signOut(auth)
                 }}>
-                    <SignOutIcon color={"#d6d3d1"} aria-label="Sign Out"/>
+                    <SignOutIcon 
+                    color={"#d6d3d1"} 
+                    aria-label="Sign Out"
+                    className="transition ease-in-out hover:scale-110"
+                    />
                 </button>
             </> 
             : 
