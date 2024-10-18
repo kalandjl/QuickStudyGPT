@@ -27,7 +27,7 @@ export default function RootLayout({
                         <div className="col-span-1">
                             <SideBar />
                         </div>
-                        <div className="col-span-5">
+                        <div className="col-span-5 pb-32">
                             {children}
                         </div>
                     </div>

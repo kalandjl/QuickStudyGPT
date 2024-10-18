@@ -54,7 +54,7 @@ const Page: NextPage = () => {
                     Create Set
                 </header>
             </div>
-            <form id="set-form" className="grid place-items-center" onSubmit={async (e) => {
+            <form id="set-form" className="grid place-items-center gap-10" onSubmit={async (e) => {
 
 
                 e.preventDefault()
@@ -71,7 +71,7 @@ const Page: NextPage = () => {
 
                 router.push(`/set/${id}`)
             }}>
-                <div id="title" className="w-4/5 mb-10">
+                <div id="title" className="w-4/5">
                     <label 
                     htmlFor="Title" 
                     className="block text-xl mb-5 font-bold text-stone-300">
@@ -102,7 +102,7 @@ const Page: NextPage = () => {
                         folders.length > 5 ? folders.length : 5
                         : 0
                     } 
-                    className="bg-stone-800 border border-gray-300 text-stone-300 font-bold text-sm rounded-lg
+                    className="bg-stone-800 border border-stone-500 text-stone-300 font-bold text-sm rounded-lg
                     focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-1/2">
                         {folders?.map((folder, i) => (
                             <option key={i} selected={folder === "default"}>
@@ -127,7 +127,7 @@ const Page: NextPage = () => {
                     focus:ring-opacity-40"></textarea>
                 </div>
                 <div id="questions" className="w-4/5">
-                    <div id="questions-inner" className="w-1/3 my-7">
+                    <div id="questions-inner" className="w-1/3">
                         <label 
                         htmlFor="question"
                         className="block mb-3 font-bold text-gray-300">

@@ -3,8 +3,8 @@ import { FC, useEffect, useState } from "react";
 import { auth, firestore } from "../../../lib/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Link from "next/link";
 import FolderOps from "./Ops/FolderOps";
+import Link from "next/link"
 
 interface Props {
     reload: React.Dispatch<React.SetStateAction<boolean>>
@@ -79,9 +79,13 @@ const Folders: FC<Props> = (props) => {
                         if (y === i) return false
                         return false
                     }))}>
-                            <h2 className="text-2xl font-bold grid place-items-center text-slate-300">
-                                {folder === "default" ? "" : folder}
-                            </h2>
+                            <Link 
+                            href={`/folder/${folder.toLowerCase()}`} 
+                            className="grid plcae-items-center">
+                                <h2 className="text-2xl font-bold grid place-items-center text-slate-300 hover:underline">
+                                    {folder === "default" ? "" : folder}
+                                </h2>
+                            </Link>
                             <div className="grid place-items-center w-min">
                                 {user && folder !== "default" ? 
                                 <FolderOps folder={folder} uid={user.uid} state={hoverTrack} index={i} reload={props.reload} />        

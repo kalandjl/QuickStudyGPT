@@ -3,7 +3,6 @@ import Link from "next/link"
 import { FC } from "react"
 import NavAccountDiv from "./NavAccountDiv"
 import Image from "next/image"
-import f from "../../app/favicon.ico"
 import logoPic from "../../public/logo.png"
 
 
@@ -12,7 +11,7 @@ interface Props {
 }
 const Nav: FC<Props> = (props: Props) => {
 
-    const linksStyle = "text-slate-300 hover:cursor-pointer font-bold text-lg"
+    const linksStyle = "text-slate-300 hover:cursor-pointer font-bold text-lg hover:underline"
 
     return (
         <>

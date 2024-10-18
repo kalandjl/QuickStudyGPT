@@ -30,7 +30,7 @@ const Home: NextPage = () => {
     return (
         <>
             <div id="header-wrap" className="px-40 py-20">
-                <header className="font-extrabold text-5xl text-slate-800">
+                <header className="font-extrabold text-5xl text-stone-200">
                     Folders
                 </header>
             </div>            
