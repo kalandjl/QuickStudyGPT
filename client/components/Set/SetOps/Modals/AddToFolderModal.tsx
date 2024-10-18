@@ -43,108 +43,109 @@ const AddToFolderModal: FC<Props> = (props) => {
 
     return (
         <>
-            <div>
-                <div className="mt-2 text-center">
-                    <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">Add to Folder</h3>
-                    <div id="folder-select-container" className="flex gap-3 justify-evenly w-auto mt-5">
-                        {folders.map((folder, i) => (
-                            <div key={i}>
-                                    <button className={`px-3 py-1 transition ease-in-out rounded-md font-bold
-                                    ${foldersActive[i] ? "bg-gray-400" : "bg-gray-300"}`}
-                                    onClick={() => {
-                                        setFoldersActive(foldersActive.map((y, u) => {
-                                            if (u === i) {
-                                                return y ? false : true
+            <div className="px-20">
+                <div>
+                    <div className="mt-2 text-center">
+                        <h3 className="text-lg font-medium leading-6 text-stone-400 capitalize dark:text-white" id="modal-title">Add to Folder</h3>
+                        <div id="folder-select-container" className="flex gap-3 justify-evenly w-auto mt-5">
+                            {folders.map((folder, i) => (
+                                <div key={i}>
+                                        <button className={`px-3 py-1 transition ease-in-out rounded-md font-bold
+                                        ${foldersActive[i] ? "bg-gray-400" : "bg-gray-300"}`}
+                                        onClick={() => {
+                                            setFoldersActive(foldersActive.map((y, u) => {
+                                                if (u === i) {
+                                                    return y ? false : true
+                                                }
+                                                
+                                                return false
+                                            }))
+                                        }}>
+                                            {folder === "default" ? "no folder" : folder}
+                                        </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-16 grid place-items-center">
+                    <div className="flex justify-between">
+                        <button 
+                        onClick={() => {
+
+                            const newState = [...props.state];
+                            newState[props.index] = false; // Set the current modal state to false (close)
+                            props.updateState(newState);
+                        }}
+                        className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium 
+                    tracking-wide capitalize transition-colors duration-300 rounded-md sm:mt-0 sm:w-auto sm:mx-2 
+                    hover:bg-stone-400 focus:outline-none focus:ring focus:ring-gray-300 
+                    focus:ring-opacity-40 bg-stone-300">
+                            Cancel
+                        </button>
+
+                        <button 
+                        onClick={async (e) => {
+                            
+                            const runUpdate = async () => {
+
+                                if (!user) return 
+
+                                const sets = JSON.parse((await getDoc(doc(firestore, `/users/${user.uid}`))).data()?.sets ?? {})
+                                
+                                if (!sets) return 
+
+                                let selectedFolder = folders[foldersActive.indexOf(true)]
+
+                                if (sets.hasOwnProperty(selectedFolder)) {
+
+                                    if (sets[selectedFolder].some((str: string) => str.includes(props.id))) return
+                                        // Iterate through the folders to find and remove the set ID
+                                        for (const folder in sets) {
+                                            const index = sets[folder].indexOf(props.id);
+                                            if (index > -1) {
+                                                sets[folder].splice(index, 1); // Remove the set ID from the folder
+                                                break; // Exit loop after finding and removing the set ID
                                             }
-                                            
-                                            return false
-                                        }))
-                                    }}>
-                                        {folder === "default" ? "no folder" : folder}
-                                    </button>
-                            </div>
-                        ))}
+                                        }
+
+                                    updateDoc(doc(firestore, `/users/${user.uid}`), {
+                                        sets: JSON.stringify({...sets, [selectedFolder]: [...sets[selectedFolder], props.id]})
+                                    })
+                                } else {
+                                    updateDoc(doc(firestore, `/users/${user.uid}`), {
+                                        sets: JSON.stringify({...sets, [selectedFolder]: [props.id]})
+                                    })
+                                }
+
+                            }
+
+                            try {
+                                await runUpdate()
+                            } catch (e) {
+                                console.error(e)
+                            }
+                            
+                            const newState = [...props.state];
+                            newState[props.index] = false; // Set the current modal state to false (close)
+                            props.updateState(newState);
+
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 500); 
+
+                        }}
+                        className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
+                        text-white capitalize transition-colors duration-300 transform bg-purple-600 rounded-md 
+                        sm:w-auto sm:mt-0 hover:bg-purple-800 focus:outline-none focus:ring focus:ring-red-400 
+                        focus:ring-opacity-40">
+                            Add
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-5 grid place-items-center">
-                <div className="w-3/5 flex justify-between">
-                    <button 
-                    onClick={() => {
-
-                        const newState = [...props.state];
-                        newState[props.index] = false; // Set the current modal state to false (close)
-                        props.updateState(newState);
-                    }}
-                    className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium 
-                    tracking-wide text-gray-700 capitalize transition-colors duration-300 
-                    transform border border-gray-200 rounded-md sm:mt-0 sm:w-auto sm:mx-2 
-                    dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 
-                    hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 
-                    focus:ring-opacity-40">
-                        Cancel
-                    </button>
-
-                    <button 
-                    onClick={async (e) => {
-                        
-                        const runUpdate = async () => {
-
-                            if (!user) return 
-
-                            const sets = JSON.parse((await getDoc(doc(firestore, `/users/${user.uid}`))).data()?.sets ?? {})
-                            
-                            if (!sets) return 
-
-                            let selectedFolder = folders[foldersActive.indexOf(true)]
-
-                            if (sets.hasOwnProperty(selectedFolder)) {
-
-                                if (sets[selectedFolder].some((str: string) => str.includes(props.id))) return
-                                    // Iterate through the folders to find and remove the set ID
-                                    for (const folder in sets) {
-                                        const index = sets[folder].indexOf(props.id);
-                                        if (index > -1) {
-                                            sets[folder].splice(index, 1); // Remove the set ID from the folder
-                                            break; // Exit loop after finding and removing the set ID
-                                        }
-                                    }
-
-                                updateDoc(doc(firestore, `/users/${user.uid}`), {
-                                    sets: JSON.stringify({...sets, [selectedFolder]: [...sets[selectedFolder], props.id]})
-                                })
-                            } else {
-                                updateDoc(doc(firestore, `/users/${user.uid}`), {
-                                    sets: JSON.stringify({...sets, [selectedFolder]: [props.id]})
-                                })
-                            }
-
-                        }
-
-                        try {
-                            await runUpdate()
-                        } catch (e) {
-                            console.error(e)
-                        }
-                        
-                        const newState = [...props.state];
-                        newState[props.index] = false; // Set the current modal state to false (close)
-                        props.updateState(newState);
-
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 500); 
-
-                    }}
-                    className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide 
-                    text-white capitalize transition-colors duration-300 transform bg-purple-600 rounded-md 
-                    sm:w-auto sm:mt-0 hover:bg-purple-800 focus:outline-none focus:ring focus:ring-red-400 
-                    focus:ring-opacity-40">
-                        Add
-                    </button>
-                </div>
-            </div>
         </>
     )
 }

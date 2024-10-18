@@ -22,8 +22,8 @@ const Modal: FC<Props> = (props) => {
                         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
                         <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom  
-                        transition-all transform rounded-lg shadow-xl rtl:text-right dark:bg-gray-900  
-                        sm:my-8 sm:align-middle sm:w-full sm:p-6 bg-zinc-950">
+                        transition-all transform rounded-lg rtl:text-right dark:bg-gray-900  
+                        sm:my-8 sm:align-middle sm:w-full sm:p-6 bg-zinc-950 shadow-inner shadow-zinc-700">
                             {props.children}
                         </div>
                     </div>

@@ -21,12 +21,12 @@ const DeleteModal: FC<Props> = (props) => {
         <>
             <div>
                 <div className="flex items-center justify-center">
-                    <DeleteIcon fill="#585959" />
+                    <DeleteIcon fill="#9c9c9c" />
                 </div>
 
                 <div className="mt-2 text-center">
-                    <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">Delete Set</h3>
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    <h3 className="text-lg font-medium leading-6 text-stone-400 capitalize dark:text-white" id="modal-title">Delete Set</h3>
+                    <p className="mt-2 text-sm text-stone-500">
                         Are you sure you want to delete this set? Once deleted, it's data is errased and cannot be retrieved
                     </p>
                 </div>
@@ -42,11 +42,9 @@ const DeleteModal: FC<Props> = (props) => {
                         props.updateState(newState);
                     }}
                     className="hover:cursor-pointer w-full px-4 py-2 mt-2 text-sm font-medium 
-                    tracking-wide text-gray-700 capitalize transition-colors duration-300 
-                    transform border border-gray-200 rounded-md sm:mt-0 sm:w-auto sm:mx-2 
-                    dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 
-                    hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 
-                    focus:ring-opacity-40">
+                    tracking-wide capitalize transition-colors duration-300 rounded-md sm:mt-0 sm:w-auto sm:mx-2 
+                    hover:bg-stone-400 focus:outline-none focus:ring focus:ring-gray-300 
+                    focus:ring-opacity-40 bg-stone-300">
                         Cancel
                     </button>
 
