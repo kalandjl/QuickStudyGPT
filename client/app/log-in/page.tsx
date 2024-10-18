@@ -110,11 +110,12 @@ const Page: NextPage = () => {
                             </button>
                         </div>
 
-                        <div className="mt-6 text-center ">
+                        <div className="mt-6 text-center flex gap-1 justify-center">
+                            <p className="text-white text-sm">Don’t have an account yet? </p>
                             <Link
                             href="/sign-up" 
                             className={`text-sm text-${themeColor}-500 hover:underline dark:text-${themeColor}-400`} >
-                                Don’t have an account yet? Sign up
+                                Sign up
                             </Link>
                         </div>
                     </div>
