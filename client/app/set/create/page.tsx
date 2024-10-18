@@ -8,7 +8,7 @@ import { getGPT, getGPTInitial } from "../../../lib/gpt";
 import { usePathname } from 'next/navigation'
 import { useRouter } from "next/navigation";
 import Loading from "../../../components/Loading";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore"
 import { auth, firestore } from "../../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -18,11 +18,31 @@ const Page: NextPage = () => {
     let [notes, setNotes] = useState<string>("")
     let [questions, setQuestions] = useState<number>(10)
     let [title, setTitle] = useState<string | undefined>()
+    let [folder, setFolder] = useState<string>("default")
+
+
+    let [folders, setFolders] = useState<string[] | undefined>()
+    let [user] = useAuthState(auth)
+
+
+    useEffect(() => {
+        
+        if (!user) return
+
+        const doAsync = async () => {
+
+            let folders = JSON.parse((await getDoc(doc(firestore, `users/${user.uid}`))).data()?.sets)
+
+            if (!folders) return
+
+            setFolders(Object.keys(folders))
+        }
+
+        doAsync()
+    })
 
 
     let [loading, setLoading] = useState<boolean>(false)
-
-    let [user] = useAuthState(auth)
 
     const router = useRouter()
 
@@ -36,19 +56,20 @@ const Page: NextPage = () => {
             </div>
             <form id="set-form" className="grid place-items-center" onSubmit={async (e) => {
 
+
                 e.preventDefault()
 
                 if (!user) return router.push('/sign-up')
 
-                    if (notes.length < 10) return alert("Notes must be at least 10 characters")
-                        
-                    setLoading(true)
+                if (notes.length < 10) return alert("Notes must be at least 10 characters")
+                    
+                setLoading(true)
 
-                    const id = await getGPTInitial(notes, user.uid, questions)
+                const id = await getGPTInitial(notes, user.uid, questions, title ?? undefined, folder ?? undefined)
 
-                    setLoading(false)
+                setLoading(false)
 
-                    router.push(`/set/${id}`)
+                router.push(`/set/${id}`)
             }}>
                 <div id="title" className="w-4/5 mb-10">
                     <label 
@@ -64,6 +85,31 @@ const Page: NextPage = () => {
                     placeholder="Biology Unit A"
                     onChange={e => setTitle(e.currentTarget.value)}
                     required />
+                </div>
+                <div id="folder" className="w-4/5">
+                    <label 
+                    htmlFor="Folder" 
+                    className="block text-xl mb-5 font-bold text-stone-300">Folder</label>
+                    <select 
+                    onChange={e => {
+
+                        let val = e.currentTarget.value
+
+                        setFolder(val === "no folder" ? "default" : val)
+                    }}
+                    id="folders-select" 
+                    size={folders ? 
+                        folders.length > 5 ? folders.length : 5
+                        : 0
+                    } 
+                    className="bg-stone-800 border border-gray-300 text-stone-300 font-bold text-sm rounded-lg
+                    focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-1/2">
+                        {folders?.map((folder, i) => (
+                            <option key={i} selected={folder === "default"}>
+                                {folder === "default" ? "no folder" : folder}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div id="textarea" className="w-4/5">
                     <label 
@@ -120,9 +166,7 @@ const Page: NextPage = () => {
                             <div
                             id="button-inner"
                             className="grid grid-flow-col">
-                                <Link href="/set/create">
-                                    Create Set
-                                </Link>
+                                Create Set
                                 <div className="pl-3">
                                     <ArrowIcon />
                                 </div>

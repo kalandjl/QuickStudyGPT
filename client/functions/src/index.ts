@@ -34,13 +34,13 @@ export const onSetCreate = functions.firestore.document("/sets/{setId}").onCreat
         sets = userData.sets || {};
     }
 
-    // Check if the 'default' folder exists, if not, create it
-    if (!sets.default) {
-        sets.default = [];
+    // Check if the desired folder exists, if not, create it
+    if (!sets[doc.data().initialFolder]) {
+        sets[doc.data().initialFolder] = [];
     }
 
-    // Add the new set ID to the 'default' folder
-    sets.default.push(setId);
+    // Add the new set ID to the desired folder
+    sets[doc.data().initialFolder].push(setId);
 
     // Update user's doc with the modified sets object
     await admin.firestore().collection("users").doc(uid).update({

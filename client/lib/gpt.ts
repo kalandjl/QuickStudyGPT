@@ -25,7 +25,7 @@ export const getGPT = async (body: {notes: string, prev?: string, questions: num
     return null
 }
 
-export const getGPTInitial = async (notes: string, uid: string, questions: number, title?: string): Promise<string | undefined> => {
+export const getGPTInitial = async (notes: string, uid: string, questions: number, title?: string, folder?: string): Promise<string | undefined> => {
 
     // Get gpt response from server at /gpt-initial
     const res = await getGPT({notes: notes, questions: questions}, 'initial')
@@ -59,7 +59,8 @@ export const getGPTInitial = async (notes: string, uid: string, questions: numbe
         "uid": uid,
         "title": title ?? "title",
         "notes": notes,
-        "content": JSON.parse(cleanedMes)
+        "content": JSON.parse(cleanedMes),
+        "initialFolder": folder ?? "default"
     })
 
     return doc.id
