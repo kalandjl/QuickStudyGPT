@@ -17,6 +17,9 @@ const Page: NextPage = () => {
 
     let [notes, setNotes] = useState<string>("")
     let [questions, setQuestions] = useState<number>(10)
+    let [title, setTitle] = useState<string | undefined>()
+
+
     let [loading, setLoading] = useState<boolean>(false)
 
     let [user] = useAuthState(auth)
@@ -31,7 +34,37 @@ const Page: NextPage = () => {
                     Create Set
                 </header>
             </div>
-            <div id="textarea-wrap" className="grid place-items-center">
+            <form id="set-form" className="grid place-items-center" onSubmit={async (e) => {
+
+                e.preventDefault()
+
+                if (!user) return router.push('/sign-up')
+
+                    if (notes.length < 10) return alert("Notes must be at least 10 characters")
+                        
+                    setLoading(true)
+
+                    const id = await getGPTInitial(notes, user.uid, questions)
+
+                    setLoading(false)
+
+                    router.push(`/set/${id}`)
+            }}>
+                <div id="title" className="w-4/5 mb-10">
+                    <label 
+                    htmlFor="Title" 
+                    className="block text-xl mb-5 font-bold text-stone-300">
+                        Title
+                    </label>
+                    <input 
+                    id="title-input" 
+                    className="bg-stone-800 border border-stone-500 text-stone-300 
+                    text-sm rounded-lg focus:ring-blue-500 font-bold
+                    focus:border-blue-500 block p-2.5 w-1/3 placeholder-stone-400/70" 
+                    placeholder="Biology Unit A"
+                    onChange={e => setTitle(e.currentTarget.value)}
+                    required />
+                </div>
                 <div id="textarea" className="w-4/5">
                     <label 
                     htmlFor="Notes" 
@@ -51,13 +84,14 @@ const Page: NextPage = () => {
                     <div id="questions-inner" className="w-1/3 my-7">
                         <label 
                         htmlFor="question"
-                        className="block mb-3 font-bold text-gray-300 dark:text-gray-300">
+                        className="block mb-3 font-bold text-gray-300">
                             # of Questions
                         </label>
                         <input 
                         type="number" 
                         id="number-input" 
-                        className="bg-stone-800 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                        className="bg-stone-800 border border-gray-500 text-stone-300 
+                        text-sm rounded-lg focus:ring-blue-500 font-bold
                         focus:border-blue-500 block p-2.5 w-1/3 placeholder-stone-400/70" 
                         placeholder="10"
                         min={5}
@@ -77,24 +111,12 @@ const Page: NextPage = () => {
                 <div id="section-button" className="w-4/5 pl-6">
                     <div id="button-wrap">
                         <button 
+                        type="submit"
                         className="w-full px-10 py-4 mt-6 tracking-wider text-white 
                         uppercase transition-colors duration-300 transform bg-teal-600 
                         rounded-lg lg:w-auto hover:bg-teal-500 focus:outline-none 
                         focus:bg-teal-500 font-extrabold text-lg"
-                        onClick={async (e) => {
-
-                            if (!user) return router.push('/sign-up')
-
-                            if (notes.length < 10) return alert("Notes must be at least 10 characters")
-                                
-                            setLoading(true)
-
-                            const id = await getGPTInitial(notes, user.uid, questions)
-
-                            setLoading(false)
-
-                            router.push(`/set/${id}`)
-                        }}>
+                        >
                             <div
                             id="button-inner"
                             className="grid grid-flow-col">
@@ -108,7 +130,7 @@ const Page: NextPage = () => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </form>
         </>
     )
 }

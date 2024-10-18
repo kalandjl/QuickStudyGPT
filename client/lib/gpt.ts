@@ -25,10 +25,12 @@ export const getGPT = async (body: {notes: string, prev?: string, questions: num
     return null
 }
 
-export const getGPTInitial = async (notes: string, uid: string, questions: number): Promise<string | undefined> => {
+export const getGPTInitial = async (notes: string, uid: string, questions: number, title?: string): Promise<string | undefined> => {
 
+    // Get gpt response from server at /gpt-initial
     const res = await getGPT({notes: notes, questions: questions}, 'initial')
 
+    // Clean up AI response
     const mes =  JSON.stringify(res.message.content)
 
     // Use regex to make GPT response parsable
@@ -42,17 +44,20 @@ export const getGPTInitial = async (notes: string, uid: string, questions: numbe
         .replace(/^"+|"+$/g, '')
         .replace(/```/g, '');
 
-    try {
-        JSON.parse(cleanedMes)
 
+    // Error catching
+    try {
+
+        JSON.parse(cleanedMes)
     } catch (e) {
 
         return
     }
 
+    // Create firestore set doc
     const doc = await addDoc(collection(firestore, "/sets"), {
         "uid": uid,
-        "title": "title",
+        "title": title ?? "title",
         "notes": notes,
         "content": JSON.parse(cleanedMes)
     })
