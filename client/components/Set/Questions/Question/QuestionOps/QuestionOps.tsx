@@ -23,7 +23,7 @@ interface ModalProps {
 const ops: {
     jsx: React.ReactNode, modal: (props: ModalProps) => React.ReactNode}[] = [
     { "jsx": <>
-        <DeleteIcon fill="#881a03" />
+        <DeleteIcon fill="#d10015" />
      </>,
      "modal": (props) => {
         return (

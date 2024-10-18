@@ -41,7 +41,7 @@ const Question: FC<Props> = (props) => {
 
     return (
         <>  
-            <div id="question-wrap" className="border-gray-200 rounded-md border-2 my-3">
+            <div id="question-wrap" className="border-stone-600 rounded-md border-2 my-3">
                 <div id="top-ops-wrap" className="py-2 pl-5" onClick={() => {setAnswerRevealed(true); setAnswers({...answers, [question]: {answer: answers[question].answer, correct: false}})}}>
                     <p className="text-blue-500 hover:cursor-pointer">See answer</p>
                 </div>
@@ -76,7 +76,7 @@ const Question: FC<Props> = (props) => {
                         id="correct-box"></div>
 
 
-                        <div className={`font-semibold text-black`}>
+                        <div className={`font-semibold text-stone-200`}>
                             {parts[0]}
                             <input
                             type="text"
@@ -84,10 +84,10 @@ const Question: FC<Props> = (props) => {
                                 ? q[question].answer.toLocaleLowerCase() 
                                 : answers[question]?.answer || ""
                             }
-                            className={`border-b-2 border-gray-500 outline-none pl-1 ${
-                                answerRevealed ? "text-red-600" : "text-black"
+                            className={`border-b-2 border-stone-500 outline-none pl-1 bg-transparent ${
+                                answerRevealed ? "text-red-600" : "text-stone-300"
                             }`}
-                            style={{ width: `${q[question].answer.toLocaleLowerCase().length * 10}px` }}
+                            style={{ width: `${(q[question].answer.toLocaleLowerCase().length * 10) + 10}px` }}
                             placeholder=""
                             key={`input-${i}`}
                             onChange={(e) => {

@@ -61,7 +61,7 @@ const Questions: FC<Props> = (props: Props) => {
     return (
         <>
             <div className="px-64 pt-10">
-                <div id="score-wrap" className="font-bold text-xl">
+                <div id="score-wrap" className="font-bold text-xl text-stone-300">
                     {score ? `Score: ${Math.floor(score[0] / score[1] * 100)}% (${score[0]}/${score[1]})` : ""}
                 </div>
                 {q ? 
