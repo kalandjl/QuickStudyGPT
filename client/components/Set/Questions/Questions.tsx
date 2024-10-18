@@ -40,7 +40,6 @@ const Questions: FC<Props> = (props: Props) => {
         let y = 0
         Object.keys(answers).forEach((x) => y += answers[x].correct === true || answers[x].correct === false ? 1 : 0)
 
-        console.log(answers)
         return [i, y]
     }, [answers])
 

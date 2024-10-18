@@ -22,8 +22,6 @@ const Home: NextPage = () => {
             if (!res) return
 
             setFolders(Object.keys(JSON.parse(res.sets)).filter(folder => folder != "default"))
-
-            console.log(res)
         }
 
         doAsync()

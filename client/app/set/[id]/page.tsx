@@ -19,8 +19,6 @@ const Home: NextPage<{params: any}> = ({ params }) => {
     // Set id
     const id = params.id
 
-    useEffect(() => console.log(reload), [reload])
-
     return (
         <>
             <Set reload={setReload} id={id} state={reload} key={reload.toString()} />

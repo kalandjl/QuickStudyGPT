@@ -14,14 +14,15 @@ interface Props {
 const QuestionsOps: FC<Props> = (props) => {
 
     let [user] = useAuthState(auth)
-    let [loading, setLoading] = useState(false)
+    let [loading, setLoading] = useState<boolean>(false)
+    
 
     return (
         <>
             {loading ? <Loading loading={loading} /> : <></>}
-            <div id="questions-ops" className="flex justify-start py-5">
+            <div id="questions-ops" className="flex justify-start py-5 my-10">
                 <div id="gen-btn">
-                    <button className="transition ease-in-out px-6 py-4 rounded-md bg-green-400 hover:bg-green-500
+                    <button className="transition ease-in-out px-6 py-4 rounded-md bg-green-800 hover:bg-green-900 text-stone-300
                     text-xl font-bold hover:scale-105"
                     onClick={async (e) => {
 
@@ -31,6 +32,7 @@ const QuestionsOps: FC<Props> = (props) => {
 
                         setLoading(false)
 
+                        setTimeout(() => window.location.reload(), 1000)
                     }}>
                         Generate more questions
                     </button>

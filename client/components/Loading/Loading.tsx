@@ -11,7 +11,7 @@ const Loading: FC<Props> = (props) => {
         <>
             {props.loading ? 
             <div 
-            className="z-50 absolute top-0 bottom-0 right-0 left-0 bg-black opacity-35 grid place-items-center">  
+            className="z-50 fixed top-0 bottom-0 right-0 left-0 bg-black opacity-35 grid place-items-center">  
                 <CircularProgress isIndeterminate color='green.800' />
             </div> 
             : <></>}

@@ -23,7 +23,7 @@ const Set: FC<Props> = (props) => {
 
         const fetchData = async () => {
         try {
-            console.log(props.id)
+
             const set = (await getDoc(doc(firestore, `${`/sets/${props.id}`}`))).data()
             
             if (!set) return
