@@ -1,39 +1,47 @@
 import OpenAI from "openai"
-import * as dotenv from 'dotenv'
-dotenv.config({path: "./res/.env"});
+import dotenv from "dotenv"
+import fs from "node:fs"
 
-// Access the OpenAI API key from process.env
+dotenv.config()
 
-const apiKey = process.env.OPENAI_API_KEY
+// Read from docker run secrets
+const apiKey = fs.readFileSync(process.env.openai_api_key ?? "", 'utf8').trim();
 
 const openai = new OpenAI({apiKey: apiKey})
 
 export const getQuestions = async (notes: string, questions: number) => {
 
+    try {
 
-    const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-            { role: "system", content: "You are a helpful assistant." },
-            {"role": "user", "content": "Give me an example of a helpful fill in the blank question"},
-            {"role": "assistant", "content": "The _______ is the _______ of the cell."},
-            {"role": "user", "content": "ONLY ONE BLANK, and that question doesn't have enought context to answer"},
-            {"role": "assistant", "content": "The mitochondria is the _______ of the cell."},
-            {
-                role: "user",
-                content: `That's perfect. Make SINGLE FILL IN THE BLANK (ONLY ONE FILL IN THE BLANK) questions 
-                based off the CONTENT of some notes
-                , and formate the questions such as {"1": {question: "", answer: ""}}. 
-                I should be able to run JSON.parse() in javascript on the raw response without error. Remember, 
-                no written response questions, just fill in the blanks. If you use a question mark,
-                it's not right. REMEMBER DON"T ADD ANY EXTRA CONTEXT, JUST THE QUOTES IN JSON FORM!!!!!`,
-            },
-            {"role": "assistant", "content": "Ok, give me the notes, difficulty level, and number of questions please."},
-            {"role": "user", "content": `Notes: ${notes}, Difficulty: normal, Number of questions: ${questions}`},
-        ],
-    })
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: "You are a helpful assistant." },
+                {"role": "user", "content": "Give me an example of a helpful fill in the blank question"},
+                {"role": "assistant", "content": "The _______ is the _______ of the cell."},
+                {"role": "user", "content": "ONLY ONE BLANK, and that question doesn't have enought context to answer"},
+                {"role": "assistant", "content": "The mitochondria is the _______ of the cell."},
+                {
+                    role: "user",
+                    content: `That's perfect. Make SINGLE FILL IN THE BLANK (ONLY ONE FILL IN THE BLANK) questions 
+                    based off the CONTENT of some notes
+                    , and formate the questions such as {"1": {question: "", answer: ""}}. 
+                    I should be able to run JSON.parse() in javascript on the raw response without error. Remember, 
+                    no written response questions, just fill in the blanks. If you use a question mark,
+                    it's not right. REMEMBER DON"T ADD ANY EXTRA CONTEXT, JUST THE QUOTES IN JSON FORM!!!!!`,
+                },
+                {"role": "assistant", "content": "Ok, give me the notes, difficulty level, and number of questions please."},
+                {"role": "user", "content": `Notes: ${notes}, Difficulty: normal, Number of questions: ${questions}`},
+            ],
+        })
 
-    return completion
+        return completion
+    } catch (e) {
+        
+        return console.error(e)
+    }
+
+
 }
 
 export const generateExtraQuestions = async (notes: string, prev: {[x: string]: {answer: string, question: string}}) => {
