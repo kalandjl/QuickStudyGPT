@@ -3,10 +3,13 @@ import * as dotenv from 'dotenv'
 dotenv.config({path: "./res/.env"});
 
 // Access the OpenAI API key from process.env
+
 const apiKey = process.env.OPENAI_API_KEY
+
 const openai = new OpenAI({apiKey: apiKey})
 
 export const getQuestions = async (notes: string, questions: number) => {
+
 
     const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",

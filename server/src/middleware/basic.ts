@@ -1,8 +1,8 @@
-import { Application } from "express";
+import { Application, Router } from "express";
 import cors from "cors"
 import express, { Request, Response, NextFunction } from "express"
 
-const basicMW = (app: Application) => {
+const basicMW = (app: Router) => {
 
     app.use(express.json()) // Middleware to parse JSON bodies
     

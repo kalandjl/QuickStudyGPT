@@ -7,7 +7,7 @@ import basicMW from "../middleware/basic.ts"
 import doRedis from "../db/redis/index.ts"
 
 const port = 4001
-const app = express()
+const app = express.Router()
 
 // Sets up basic middleware
 basicMW(app)
@@ -86,6 +86,4 @@ app.post('/token', async (req: Request, res: Response) => {
 
 
 // Serve
-const serveAuth = () => {app.listen(port, () => console.log(`Auth served on port ${port}`))}
-
-export default serveAuth
+export default app

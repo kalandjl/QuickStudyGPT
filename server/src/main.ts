@@ -1,10 +1,17 @@
+import express from "express"
 // Start servers
 
-import serveApi from "./routes/api.ts";
-import serveAuth from "./routes/auth.ts";
+import apiRouter from "./routes/api.ts";
+import authRouter from "./routes/auth.ts";
 
-// API server (gpt functions)
-serveApi()
+const app = express()
 
-// Auth server 
-serveAuth()
+const port = 4000
+
+app.use('/api', apiRouter)
+app.use('/auth', authRouter)
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}/api and http://localhost:${port}/auth`)
+})

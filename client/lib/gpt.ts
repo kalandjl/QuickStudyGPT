@@ -3,7 +3,7 @@ import { firestore } from "./firebase";
 
 export const getGPT = async (body: {notes: string, prev?: string, questions: number}, op: string) => {
 
-    const req = await fetch(`http://localhost:4000/gpt-${op}`,
+    const req = await fetch(`http://localhost:4000/api/gpt-${op}`,
         {
             body: JSON.stringify(body),
             method: "POST",

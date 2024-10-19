@@ -4,7 +4,7 @@ import { generateExtraQuestions, getQuestions } from "../func/gpt.ts"
 import basicMW from "../middleware/basic.ts"
 
 const port = 4000
-const app = express()
+const app = express.Router()
 
 // Sets up basic middleware
 basicMW(app)
@@ -67,6 +67,5 @@ app.post('/gpt-gen', async (req: Request, res: Response) => {
 
 
 // Serve
-const serveApi = () => {app.listen(port, () => {console.log(`Api served on port ${port}`)})}
 
-export default serveApi
+export default app

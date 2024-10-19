@@ -1,0 +1,28 @@
+version: '3'
+services:
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+  server: 
+    build: ./server
+    secrets:
+      - OPENAI_API_KEY
+    environment:
+      OPENAI_API_KEY: /run/secrets/OPENAI_API_KEY
+    ports:
+      - "4000:4000"
+    develop:
+      watch:
+        - action: sync
+          path: ./web
+          target: /src/web
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
+      
+secrets:
+  OPENAI_API_KEY:
+    file: ./server/res/OPENAI_API_KEY.txt
