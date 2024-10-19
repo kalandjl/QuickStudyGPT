@@ -55,7 +55,11 @@ const Set: FC<Props> = (props) => {
                             </span>
                         </h1>
                         <div className="mt-10">
-                            <SetOps id={props.id} />
+                            {set.fullyLoaded === false ? 
+                            <></>
+                            :
+                            <SetOps id={props.id} /> 
+                            }
                         </div>
                     </div>
                 </section>

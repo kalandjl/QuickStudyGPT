@@ -18,7 +18,7 @@ const SideBar: FC<Props> = () => {
         <div className="h-full w-full bg-stone-800 px-2 py-4">
             {user ? <Ops uid={user?.uid} reload={setReload} /> : <></>}
             <div className="w-full my-3 bg-gray-400" style={{height: "3px"}}></div>
-            <Folders key={reload.toString()} reload={setReload} />
+            {user ? <Folders key={reload.toString()} reload={setReload} /> : <></>}
         </div>
     )
 }

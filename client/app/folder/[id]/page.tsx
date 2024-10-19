@@ -6,11 +6,13 @@ import { auth, firestore } from "../../../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { ConvertKeysToLowerCase } from "../../../lib/misc/strings";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const Home: NextPage<{params: any}> = ({ params }) => {
 
     let [loading, setLoading] = useState<boolean>(false)
     let [sets, setSets] = useState<any[] | undefined>()
+    let [loadFailed, setLoadFailed] = useState<boolean>(false)
     const id: string= params.id
 
     let [user] = useAuthState(auth)
@@ -21,11 +23,11 @@ const Home: NextPage<{params: any}> = ({ params }) => {
 
         let doAsync = async () => {
 
-            let t = ConvertKeysToLowerCase(JSON.parse((await getDoc(doc(firestore, `/users/${user.uid}`))).data()?.sets))
+            let t = ConvertKeysToLowerCase(JSON.parse((await getDoc(doc(firestore, `/users/${user.uid}`))).data()?.sets))[id.replace("%20", " ")]
 
-            if (!t) return
+            if (!t) return setLoadFailed(true)
 
-            let populatedSets = await Promise.all(t[id.replace("%20", " ")].map(async (x: string) => {
+            let populatedSets = await Promise.all(t.map(async (x: string) => {
 
                 return {...(await getDoc(doc(firestore, `/sets/${x}`))).data(), ...{id: x}}
             }))
@@ -37,7 +39,7 @@ const Home: NextPage<{params: any}> = ({ params }) => {
 
     }, [user])
 
-    useEffect(() => console.log(sets), [sets])
+    if (loadFailed) notFound()
 
     return (
         <>  

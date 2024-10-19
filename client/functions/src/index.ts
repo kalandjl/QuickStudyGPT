@@ -18,6 +18,7 @@ export const onUserCreate = functions.auth.user().onCreate((user) => {
 
 // When set is created, add it to the user's Firestore document
 export const onSetCreate = functions.firestore.document("/sets/{setId}").onCreate(async (doc) => {
+    
     const uid = doc.data().uid;
     const setId = doc.id;
 
@@ -46,6 +47,12 @@ export const onSetCreate = functions.firestore.document("/sets/{setId}").onCreat
     await admin.firestore().collection("users").doc(uid).update({
         sets: JSON.stringify(sets)  // Store it back as a string if necessary
     });
+
+    // Update set doc to "fully loaded"
+    await admin.firestore().collection("sets").doc(doc.id).update({
+        fullyLoaded: true
+    })
+    
 });
 
 // When a set is deleted, remove its ID from the user's Firestore document

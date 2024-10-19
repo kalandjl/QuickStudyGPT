@@ -26,7 +26,10 @@ const NavAccountDiv:FC<Props> = (props: Props) => {
             </>
             :
             user ? 
-            <>
+            <div id="nav-account" className="flex gap-2">
+                <p id="display-name" className="text-stone-300 font-semibold">
+                    {user.displayName}
+                </p>
                 <button
                 className="text-slate-300 text-xl font-extrabold hover:underline"
                 onClick={(e) => {
@@ -41,7 +44,7 @@ const NavAccountDiv:FC<Props> = (props: Props) => {
                     className="transition ease-in-out hover:scale-110"
                     />
                 </button>
-            </> 
+            </div> 
             : 
             <>
                 <div id="border-wrap" className="py-2 h-full">

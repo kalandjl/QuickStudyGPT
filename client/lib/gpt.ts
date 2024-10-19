@@ -60,7 +60,8 @@ export const getGPTInitial = async (notes: string, uid: string, questions: numbe
         "title": title ?? "title",
         "notes": notes,
         "content": JSON.parse(cleanedMes),
-        "initialFolder": folder ?? "default"
+        "initialFolder": folder ?? "default",
+        "fullyLoaded": false
     })
 
     return doc.id
