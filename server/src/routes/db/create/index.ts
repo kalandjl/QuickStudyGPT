@@ -26,8 +26,6 @@ app.post("/user", async (req: Request, res: Response) => {
   
     const { body } = req
 
-    console.log(body)
-
     if (!body) return res.send(404)
 
     try {
@@ -51,7 +49,8 @@ app.post("/user", async (req: Request, res: Response) => {
 
 app.post('/set', authenticateTokenMW, async (req: Request, res: Response) => {
 
-  if (!uri) return res.sendStatus(404)
+    console.log(req.body)
+    if (!uri) return res.sendStatus(404)
 
     const client = new MongoClient(uri)
   
@@ -67,7 +66,7 @@ app.post('/set', authenticateTokenMW, async (req: Request, res: Response) => {
   
       const t = await db.collection("sets").insertOne({...body.data})
   
-      console.log(t)
+      console.log("inserted doc")
       res.status(200).send(t)
   
     } catch (error) {

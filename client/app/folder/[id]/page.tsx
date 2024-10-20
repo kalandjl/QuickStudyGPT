@@ -7,6 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { ConvertKeysToLowerCase } from "../../../lib/misc/strings";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import useAuth from "../../../utils/useAuth";
 
 const Home: NextPage<{params: any}> = ({ params }) => {
 
@@ -15,7 +16,7 @@ const Home: NextPage<{params: any}> = ({ params }) => {
     let [loadFailed, setLoadFailed] = useState<boolean>(false)
     const id: string= params.id
 
-    let [user] = useAuthState(auth)
+    const [user] = useAuth(window.localStorage.getItem("accessToken"))
 
     useEffect(() => {
 

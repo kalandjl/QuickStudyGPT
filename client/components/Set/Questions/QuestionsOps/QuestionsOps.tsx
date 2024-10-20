@@ -4,6 +4,7 @@ import { generateGPT } from "../../../../lib/gpt";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../../lib/firebase";
 import Loading from "../../../Loading";
+import useAuth from "../../../../utils/useAuth";
 
 interface Props {
     notes: string
@@ -13,7 +14,7 @@ interface Props {
 
 const QuestionsOps: FC<Props> = (props) => {
 
-    let [user] = useAuthState(auth)
+    let [user] = useAuth(window.localStorage.getItem("accessToken"))
     let [loading, setLoading] = useState<boolean>(false)
     
 

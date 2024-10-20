@@ -11,7 +11,7 @@ const basicMW = (app: Router) => {
     app.use(cors({
         origin: 'http://localhost:3000', // Allow only this origin
         methods: ['GET', 'POST'], // Allow specific methods
-        allowedHeaders: ['Content-Type'], // Allow specific headers
+        allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
     }));
 
 

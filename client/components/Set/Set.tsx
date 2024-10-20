@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import Title from "./Title";
 import SetOps from "./SetOps";
 import Questions from "./Questions";
+import { getSet } from "../../lib/db";
 
 interface Props {
     id: string
@@ -22,17 +23,21 @@ const Set: FC<Props> = (props) => {
 
 
         const fetchData = async () => {
-        try {
+            try {
 
-            const set = (await getDoc(doc(firestore, `${`/sets/${props.id}`}`))).data()
-            
-            if (!set) return
+                const token = window.localStorage.getItem("accessToken")
 
-            setSet(set)
-            setLoading(false) // Set loading to false after the documents have been fetched
-        } catch (error) {
-            setLoading(false)
-        }
+                if (!token) return alert("jwt auth error")
+
+                const set = await getSet({_id: props.id}, token)
+                
+                if (!set) return
+
+                setSet(set)
+                setLoading(false) // Set loading to false after the documents have been fetched
+            } catch (error) {
+                setLoading(false)
+            }
         }
 
         fetchData()

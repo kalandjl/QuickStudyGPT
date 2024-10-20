@@ -1,29 +1,46 @@
 import setContent from "./types/setContent"
+import setDoc from "./types/setDoc"
 
 export const createSet = async (
-    notes: string, 
-    title: string, 
-    uid: string, 
-    content: setContent, 
-    initialFolder: string,
-    fullyLoaded: boolean
+    data: {
+        notes: string, 
+        title: string, 
+        uid: string, 
+        content: setContent, 
+        initialFolder: string,
+        fullyLoaded: boolean
+    }, accessToken: string
 ): Promise<string> => {
 
     // @ts-ignore
-    const res: {id: string} = (await fetch(`http://localhost:4000/db/create/set`, {
+    const res: {insertedId: string} = await (await fetch(`http://localhost:4000/db/create/set`, {
         method: "POST", 
         headers: {
-            "Content-Type": "application/json" // Set the Content-Type header
+            "Content-Type": "application/json", // Set the Content-Type header
+            "Authorization": `Bearer ${accessToken}`
         },
         body: JSON.stringify({
-            notes: notes, 
-            title: title, 
-            uid: uid,
-            content: content,
-            initialFolder: initialFolder,
-            fullyLoaded: fullyLoaded
+            data: data
         })
     })).json()
 
-    return res.id
+    return res.insertedId
+}
+
+
+export const getSet = async (query: {[x: string]: any}, accessToken: string): Promise<setDoc> => {
+
+    // @ts-ignore
+    const res: setDoc = await (await fetch(`http://localhost:4000/db/get/set`, {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json", // Set the Content-Type header
+            "Authorization": `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            query: query
+        })
+    })).json()
+
+    return res
 }

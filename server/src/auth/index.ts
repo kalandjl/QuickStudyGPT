@@ -20,30 +20,33 @@ export const generateRefreshToken = (user: {uid: string}) => {
     return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 }
 
-export const authenticateAccessToken = (token: string): string | undefined => {
+export const authenticateAccessToken = (token: string, res: Response): string | undefined => {
+
 
     if (!process.env.ACCESS_TOKEN_SECRET) return
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err: any, res: any) => {
+    try {
+
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET) as { uid: string }
+        return decoded.uid
+    } catch (err) {
         
-        if (err) return res.status(401).send(err)
-        
-        return res.uid
-    })
+        res.status(401).send(err)
+        return undefined
+    }
 }
 
 export const authenticateRefreshToken = (token: string, res: Response): string | undefined => {
 
     if (!process.env.REFRESH_TOKEN_SECRET) return
 
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, r) => {
-        
-        console.log(err)
-        if (err || !r) return res.status(401).send(err)
+    try {
 
-        console.log(err,r)
+        const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET) as { uid: string }
+        return decoded.uid
+    } catch (err) {
 
-        // @ts-ignore
-        return r.uid
-    })
+        res.status(401).send(err)
+        return undefined
+    }
 }

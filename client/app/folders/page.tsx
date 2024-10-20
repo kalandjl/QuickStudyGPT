@@ -5,10 +5,11 @@ import { auth, firestore } from "../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import useAuth from "../../utils/useAuth";
 
 const Home: NextPage = () => {
 
-    let [user] = useAuthState(auth)
+    const [user] = useAuth(window.localStorage.getItem("accessToken"))
     let [folders, setFolders] = useState<string[] | undefined>(undefined)
 
     useEffect(() => {

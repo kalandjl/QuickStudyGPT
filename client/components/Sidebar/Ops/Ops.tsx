@@ -7,6 +7,7 @@ import { auth, firestore } from "../../../lib/firebase";
 import Modal from "../../Modal";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateFolderModal from "./Modals/CreateFolderModal";
+import useAuth from "../../../utils/useAuth";
 
 
 interface Props {
@@ -43,7 +44,7 @@ const ops: {jsx: React.ReactNode, modal: ((
 const SetOps: FC<Props> = (props: Props) => {
 
     const [modalsTrack, setModalsTrack] = useState<boolean[]>(new Array(ops.length).fill(false))
-    let [user] = useAuthState(auth)
+    let [user] = useAuth(window.localStorage.getItem("accessToken"))
 
     return (
         <>

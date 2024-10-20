@@ -6,6 +6,7 @@ import { auth } from "../../../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import RenameFolderModal from "../Modals/RenameFolderModal";
 import DeleteFolderModal from "../Modals/DeleteFolderModal";
+import useAuth from "../../../../utils/useAuth";
 
 interface Props {
     folder: string
@@ -63,7 +64,7 @@ const ops: {
 const FolderOps: FC<Props> = (props) => {
 
     const [modalsTrack, setModalsTrack] = useState<boolean[]>(new Array(ops.length).fill(false))
-    let [user] = useAuthState(auth)
+    let [user] = useAuth(window.localStorage.getItem("accessToken"))
 
     return (
         <>

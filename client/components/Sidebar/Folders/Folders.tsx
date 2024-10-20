@@ -5,13 +5,16 @@ import { getDoc, doc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import FolderOps from "./Ops/FolderOps";
 import Link from "next/link"
+import useAuth from "../../../utils/useAuth";
 
 interface Props {
     reload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Folders: FC<Props> = (props) => {
-    const [user] = useAuthState(auth);
+
+
+    const [user] = useAuth(window.localStorage.getItem("accessToken"))
     const [docs, setDocs] = useState<{ [folder: string]: any[] }>({});
     const [loading, setLoading] = useState(true);
     const [hoverTrack, setHoverTrack] = useState<boolean[]>([])

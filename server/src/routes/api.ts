@@ -21,7 +21,6 @@ app.post('/gpt-initial', async (req: Request<{}, {}, {notes: string, questions: 
 
     if (gptres) {
 
-        console.log(gptres)
         return res.status(200).send(gptres)
     }
 

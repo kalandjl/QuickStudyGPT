@@ -4,8 +4,9 @@ import { FC } from "react";
 import { auth } from "../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth"
 import Link from "next/link";
-import { signOut } from "firebase/auth";
 import { SignOutIcon } from "../../app/icons";
+import useAuth from "../../utils/useAuth";
+import { signOut } from "../../lib/auth/index";
 
 interface Props {
 
@@ -13,7 +14,7 @@ interface Props {
 
 const NavAccountDiv:FC<Props> = (props: Props) => {
 
-    let [ user, loading ] = useAuthState(auth)
+    let [ user, loading ] = useAuth(window.localStorage.getItem("accessToken"))
 
     const linkStyle = "text-slate-300 font-bold hover:cusor-pointer"
 
@@ -28,7 +29,7 @@ const NavAccountDiv:FC<Props> = (props: Props) => {
             user ? 
             <div id="nav-account" className="flex gap-2">
                 <p id="display-name" className="text-stone-300 font-semibold">
-                    {user.displayName}
+                    {user.name}
                 </p>
                 <button
                 className="text-slate-300 text-xl font-extrabold hover:underline"
@@ -36,7 +37,7 @@ const NavAccountDiv:FC<Props> = (props: Props) => {
 
                     e.preventDefault()
 
-                    signOut(auth)
+                    signOut(window)
                 }}>
                     <SignOutIcon 
                     color={"#d6d3d1"} 

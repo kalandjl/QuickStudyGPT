@@ -16,14 +16,14 @@ export const authenticateTokenMW = (req: Request, res: Response, next: NextFunct
     if (!token) return res.sendStatus(401)
     if (!process.env.ACCESS_TOKEN_SECRET) return res.sendStatus(401)
 
-    authenticateAccessToken(token)
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err: any, user: any) => {
-        //@ts-ignore
-        if (err) return res.status(401).send(err)
-        
-        //@ts-ignore
-        req.user = user
-        next()
-    })
+    const uid = authenticateAccessToken(token, res)
+    console.log(uid)
+ 
+    if (!uid) return res.sendStatus(401)
+
+    req.body.accessToken = token
+    req.body.uid = uid
+
+    next()
 }

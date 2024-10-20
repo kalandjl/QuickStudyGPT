@@ -11,6 +11,7 @@ import Loading from "../../../components/Loading";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore"
 import { auth, firestore } from "../../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import useAuth from "../../../utils/useAuth";
 
 
 const Page: NextPage = () => {
@@ -21,26 +22,15 @@ const Page: NextPage = () => {
     let [folder, setFolder] = useState<string>("default")
 
 
-    let [folders, setFolders] = useState<string[] | undefined>()
-    let [user] = useAuthState(auth)
-
+    const [user] = useAuth(window.localStorage.getItem("accessToken"))
+    let [folders, setFolders] = useState<string[] | undefined>(undefined)
 
     useEffect(() => {
-        
+
         if (!user) return
 
-        const doAsync = async () => {
-
-            let folders = JSON.parse((await getDoc(doc(firestore, `users/${user.uid}`))).data()?.sets)
-
-            if (!folders) return
-
-            setFolders(Object.keys(folders))
-        }
-
-        doAsync()
-    })
-
+        setFolders(Object.keys(JSON.parse(user.sets)))
+    }, [user])
 
     let [loading, setLoading] = useState<boolean>(false)
 
@@ -65,10 +55,23 @@ const Page: NextPage = () => {
                     
                 setLoading(true)
 
-                const id = await getGPTInitial(notes, user.uid, questions, title ?? undefined, folder ?? undefined)
+                let token = window.localStorage.getItem("accessToken")
+
+                if (!token) return alert("auth error")
+
+                const id = await getGPTInitial(
+                    {
+                        notes: notes, 
+                        uid: user.uid, 
+                        questions: questions, 
+                        title: title ?? undefined, 
+                        initialFolder: folder ?? undefined
+                    }, token
+                )
 
                 setLoading(false)
 
+                console.log(id)
                 router.push(`/set/${id}`)
             }}>
                 <div id="title" className="w-4/5">
@@ -103,9 +106,9 @@ const Page: NextPage = () => {
                         : 0
                     } 
                     className="bg-stone-800 border border-stone-500 text-stone-300 font-bold text-sm rounded-lg
-                    focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-1/2">
+                    focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-1/2" defaultValue="default">
                         {folders?.map((folder, i) => (
-                            <option key={i} selected={folder === "default"}>
+                            <option key={i}>
                                 {folder === "default" ? "no folder" : folder}
                             </option>
                         ))}

@@ -45,3 +45,9 @@ export const logInUser = async (email: string, password: string) => {
 
     return token.json()
 }
+
+export const signOut = async (window: Window) => {
+
+    window.localStorage.removeItem("accessToken")
+    window.localStorage.removeItem("refreshToken")
+}

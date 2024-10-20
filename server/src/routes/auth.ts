@@ -2,7 +2,7 @@ import express, { Request, Response } from "express"
 import { LogInReqBody } from "../types/types.ts"
 import { catchError } from "../misc/catch.ts"
 import { getUser, verifyUser } from "../db/mongodb/main.ts"
-import { authenticateRefreshToken, generateAccessToken, generateRefreshToken } from "../auth/index.ts"
+import { authenticateAccessToken, authenticateRefreshToken, generateAccessToken, generateRefreshToken } from "../auth/index.ts"
 import basicMW from "../middleware/basic.ts"
 import doRedis from "../db/redis/index.ts"
 import dotenv from "dotenv"
@@ -82,10 +82,9 @@ app.post('/token', async (req: Request, res: Response) => {
     // Return uid to sign new token with
     const uid = authenticateRefreshToken(refreshToken, res)
 
-
     if (!uid) return res.sendStatus(400)
 
-    const accessToken = generateRefreshToken({uid: uid})
+    const accessToken = generateAccessToken({uid: uid})
 
     res.json({accessToken: accessToken})
 })
@@ -96,9 +95,7 @@ app.post('/get-user', authenticateTokenMW, async (req: Request, res: Response) =
 
     if (!req.body) return res.sendStatus(404)
 
-    const uid = authenticateRefreshToken(req.body.refreshToken, res)
-
-    let resObj = await catchError(getUser, uid)
+    let resObj = await catchError(getUser, req.body.uid)
 
     
     if (resObj.message === undefined) {

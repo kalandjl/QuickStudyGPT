@@ -26,10 +26,16 @@ export const getGPT = async (body: {notes: string, prev?: string, questions: num
     return null
 }
 
-export const getGPTInitial = async (notes: string, uid: string, questions: number, title?: string, folder?: string): Promise<string | undefined> => {
+export const getGPTInitial = async (data: 
+    {notes: string, 
+        uid: string, 
+        questions: number, 
+        title?: string, 
+        initialFolder?: string
+    }, accessToken: string): Promise<string | undefined> => {
 
     // Get gpt response from server at /gpt-initial
-    const res = await getGPT({notes: notes, questions: questions}, 'initial')
+    const res = await getGPT({notes: data.notes, questions: data.questions}, 'initial')
 
     // Clean up AI response
     const mes =  JSON.stringify(res.message.content)
@@ -50,13 +56,23 @@ export const getGPTInitial = async (notes: string, uid: string, questions: numbe
     try {
 
         JSON.parse(cleanedMes)
+        console.log(JSON.parse(cleanedMes))
     } catch (e) {
 
         return
     }
 
+    let t = {
+        title: data.title ?? "title",
+        content: JSON.parse(cleanedMes),
+        initialFolder: data.initialFolder ?? "default",
+        uid: data.uid,
+        fullyLoaded: false,
+        notes: data.notes
+    }
+
     // Create mongodb set doc
-    const id = await createSet(notes, title ?? "title", uid, JSON.parse(cleanedMes), folder ?? "default", false)
+    const id = await createSet(t, accessToken)
 
 
     return id

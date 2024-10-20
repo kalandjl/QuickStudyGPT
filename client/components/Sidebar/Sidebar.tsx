@@ -13,7 +13,9 @@ interface Props {}
 const SideBar: FC<Props> = () => {
 
     let [reload, setReload] = useState(true)
-    let user = useAuth()
+    let [user] = useAuth(window.localStorage.getItem("accessToken"))
+
+    useEffect(() => console.log(user), [user])
 
     return (
         <div className="h-full w-full bg-stone-800 px-2 py-4">
