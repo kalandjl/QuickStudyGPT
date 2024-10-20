@@ -8,7 +8,8 @@ services:
     secrets:
       - openai_api_key
     environment:
-      - openai_api_key=/run/secrets/openai_api_key
+      - PROD=true
+      - PATH=/run/secrets/openai_api_key
     env_file:
       - './server/res/.env'
     ports:

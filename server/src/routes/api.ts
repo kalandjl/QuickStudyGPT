@@ -3,7 +3,6 @@ import express, { Request, Response } from "express"
 import { generateExtraQuestions, getQuestions } from "../func/gpt.ts"
 import basicMW from "../middleware/basic.ts"
 
-const port = 4000
 const app = express.Router()
 
 // Sets up basic middleware

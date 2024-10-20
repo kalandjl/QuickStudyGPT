@@ -2,10 +2,15 @@ import OpenAI from "openai"
 import dotenv from "dotenv"
 import fs from "node:fs"
 
+dotenv.config({path: "./res/.env"})
 dotenv.config()
 
 // Read from docker run secrets
-const apiKey = fs.readFileSync(process.env.openai_api_key ?? "", 'utf8').trim();
+// const apiKey1 = process.env.PROD ? 
+//     fs.readFileSync(process.env.path ?? "", 'utf8').trim() : 
+//     process.env.OPENAI_API_KEY
+
+const apiKey = process.env.OPENAI_API_KEY
 
 const openai = new OpenAI({apiKey: apiKey})
 
@@ -37,7 +42,7 @@ export const getQuestions = async (notes: string, questions: number) => {
 
         return completion
     } catch (e) {
-        
+
         return console.error(e)
     }
 
