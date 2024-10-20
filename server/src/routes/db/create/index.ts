@@ -1,5 +1,9 @@
 import basicMW from "../../../middleware/basic.ts";
 import express, { Request, Response } from "express"
+import dotenv from "dotenv"
+
+dotenv.config({path: "./res/.env"})
+dotenv.config()
 
 import mongo from "mongodb"
 
@@ -11,9 +15,11 @@ const app = express.Router()
 basicMW(app)
 
 // Replace the uri string with your connection string.
-const uri = `mongodb+srv://admin:${process.env.DB_PASSWORD}@serverlessinstance0.fxkbq2c.mongodb.net/`
+const uri = process.env.DB_URI
 
 app.post("/user", async (req: Request, res: Response) => {
+
+    if (!uri) return res.sendStatus(404)
 
     const client = new MongoClient(uri)
   

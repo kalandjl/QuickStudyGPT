@@ -1,10 +1,14 @@
 import express, { Request, Response } from "express"
 import { LogInReqBody } from "../types/types.ts"
 import { catchError } from "../misc/catch.ts"
-import { verifyUser } from "../db/sql/main.ts"
+import { verifyUser } from "../db/mongodb/main.ts"
 import { authenticateRefreshToken, generateAccessToken, generateRefreshToken } from "../auth/index.ts"
 import basicMW from "../middleware/basic.ts"
 import doRedis from "../db/redis/index.ts"
+import dotenv from "dotenv"
+
+dotenv.config({path: "./res/.env"})
+dotenv.config()
 
 const app = express.Router()
 

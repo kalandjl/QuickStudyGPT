@@ -5,18 +5,36 @@ import Image from "next/image";
 import { googleSignInPopup } from "../../lib/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { logInUser } from "../../lib/auth/index";
 
 const Page: NextPage = () => {
 
     const themeColor = "teal"
     const router = useRouter()
 
+    let [email, setEmail] = useState<string | undefined>()
+    let [password, setPassword] = useState<string | undefined>()
+
     return (
         <>
         <section className="dark:bg-gray-900">
             <div className="container flex flex-col items-center justify-center pt-48 px-6 mx-auto">
                 <div className="w-full grid place-items-center">
-                    <form className="w-full max-w-md" onSubmit={(e) => e.preventDefault()}>
+                    <form className="w-full max-w-md" onSubmit={async (e) => {
+
+                        e.preventDefault()
+
+                        if (!email || !password) return alert("Email or password undefined")
+
+                        const res = await logInUser(email, password)
+
+                        if (!res) return
+
+                        console.log(res)
+
+                        window.localStorage.setItem("refreshToken", res.refreshToken)
+                    }}>
 
                         <h1 className="mt-3 text-4xl font-extrabold text-stone-300 capitalize sm:text-3xl dark:text-white">
                             Log in
@@ -39,6 +57,7 @@ const Page: NextPage = () => {
 
                             <input 
                             type="email" 
+                            onChange={e => setEmail(e.currentTarget.value)}
                             className={`block w-full py-3 text-gray-700 bg-transparent 
                             border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300
                             dark:border-gray-600 focus:border-${themeColor}-400 
@@ -65,20 +84,21 @@ const Page: NextPage = () => {
 
                             <input 
                             type="password" 
+                            onChange={e => setPassword(e.currentTarget.value)}
                             className={`block w-full px-10 py-3 text-gray-700 border bg-transparent
                                 rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600
                                 focus:border-${themeColor}-400 dark:focus:border-${themeColor}-300 
                                 focus:ring-${themeColor}-300 focus:outline-none focus:ring focus:ring-opacity-40`} 
                             placeholder="Password" />
                         </div>
-                    </form>
-                    <div className="mt-6 w-full max-w-md">
-                        <button className={`w-full px-6 py-3 text-sm font-medium tracking-wide text-white 
+                        <button className={`w-full mt-5 px-6 py-3 text-sm font-medium tracking-wide text-white 
                             capitalize transition-colors duration-300 transform bg-${themeColor}-500 rounded-lg 
                             hover:bg-${themeColor}-400 focus:outline-none focus:ring focus:ring-${themeColor}-300 
                             focus:ring-opacity-50`}>
                             Sign in
                         </button>
+                    </form>
+                    <div className="mt-6 w-full max-w-md">
 
                         <p className="mt-4 text-center text-stone-300 dark:text-gray-400">
                             or log in with
