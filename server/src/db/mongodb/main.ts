@@ -1,6 +1,7 @@
 import { findUser } from "./mock.ts"
 import mongo from "mongodb"
 import dotenv from "dotenv"
+import { ErrorObject } from "../../types/types.ts"
 
 const { MongoClient } = mongo
 
@@ -33,5 +34,27 @@ export const verifyUser = async (params: {email: string, password: string}) => {
     } finally {
         
         await client.close()
+    }
+}
+
+export const getUser = async (uid: string) => {
+
+    if (!uri) return
+
+    try {
+
+        const client = new MongoClient(uri)
+
+        await client.connect()
+
+        let val = await client.db("QuickStudyGPT").collection("users").findOne({uid: uid})
+
+        if (val === null) throw new Error("No user found")
+
+        return val
+    } catch (e:any) {
+        let errorObject: ErrorObject = {code:400,message:e.message}
+
+        return errorObject
     }
 }

@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express"
 import { LogInReqBody } from "../types/types.ts"
 import { catchError } from "../misc/catch.ts"
-import { verifyUser } from "../db/mongodb/main.ts"
+import { getUser, verifyUser } from "../db/mongodb/main.ts"
 import { authenticateRefreshToken, generateAccessToken, generateRefreshToken } from "../auth/index.ts"
 import basicMW from "../middleware/basic.ts"
 import doRedis from "../db/redis/index.ts"
 import dotenv from "dotenv"
+import { authenticateTokenMW } from "../middleware/token.ts"
 
 dotenv.config({path: "./res/.env"})
 dotenv.config()
@@ -45,6 +46,8 @@ app.post('/login', async (req: Request, res: Response) => {
     const accessToken = generateAccessToken(user)
     const refreshToken = generateRefreshToken(user)
 
+    if (!accessToken || !refreshToken) return res.sendStatus(400)
+
     doRedis((client) => {
 
         client.set(refreshToken, refreshToken)
@@ -71,21 +74,41 @@ app.post('/token', async (req: Request, res: Response) => {
 
     const refreshToken = req.body.refreshToken
 
-    const refreshTokens = await doRedis((client) => {return client.keys('*')})
+    // const refreshTokens = await doRedis((client) => {return client.keys('*')})
 
     if (refreshToken == null) return res.sendStatus(401)
-    if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+    // if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
 
     // Return uid to sign new token with
-    const uid = authenticateRefreshToken(refreshToken)
+    const uid = authenticateRefreshToken(refreshToken, res)
 
-    console.log(uid)
+
+    if (!uid) return res.sendStatus(400)
 
     const accessToken = generateRefreshToken({uid: uid})
 
-
     res.json({accessToken: accessToken})
 })
+
+
+//Returns information on a user given uid 
+app.post('/get-user', authenticateTokenMW, async (req: Request, res: Response) => {
+
+    if (!req.body) return res.sendStatus(404)
+
+    const uid = authenticateRefreshToken(req.body.refreshToken, res)
+
+    let resObj = await catchError(getUser, uid)
+
+    
+    if (resObj.message === undefined) {
+        res.sendStatus(resObj.code)
+    } else {
+        //@ts-ignore
+        res.send(resObj.message).status(resObj.code)
+    }
+})
+
 
 
 // Serve

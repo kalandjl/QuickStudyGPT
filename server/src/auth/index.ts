@@ -1,4 +1,4 @@
-import { NextFunction } from "express"
+import { NextFunction, Response } from "express"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 
@@ -20,7 +20,7 @@ export const generateRefreshToken = (user: {uid: string}) => {
     return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 }
 
-export const authenticateAccessToken = (token: string) => {
+export const authenticateAccessToken = (token: string): string | undefined => {
 
     if (!process.env.ACCESS_TOKEN_SECRET) return
 
@@ -32,15 +32,18 @@ export const authenticateAccessToken = (token: string) => {
     })
 }
 
-export const authenticateRefreshToken = (token: string) => {
+export const authenticateRefreshToken = (token: string, res: Response): string | undefined => {
 
     if (!process.env.REFRESH_TOKEN_SECRET) return
 
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err: any, res: any) => {
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, r) => {
         
-        if (err) return res.status(401).send(err)
+        console.log(err)
+        if (err || !r) return res.status(401).send(err)
 
-        return res.uid
+        console.log(err,r)
+
+        // @ts-ignore
+        return r.uid
     })
-
 }

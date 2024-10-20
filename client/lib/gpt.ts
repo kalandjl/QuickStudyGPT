@@ -1,5 +1,6 @@
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "./firebase";
+import { createSet } from "./db";
 
 export const getGPT = async (body: {notes: string, prev?: string, questions: number}, op: string) => {
 
@@ -54,17 +55,11 @@ export const getGPTInitial = async (notes: string, uid: string, questions: numbe
         return
     }
 
-    // Create firestore set doc
-    const doc = await addDoc(collection(firestore, "/sets"), {
-        "uid": uid,
-        "title": title ?? "title",
-        "notes": notes,
-        "content": JSON.parse(cleanedMes),
-        "initialFolder": folder ?? "default",
-        "fullyLoaded": false
-    })
+    // Create mongodb set doc
+    const id = await createSet(notes, title ?? "title", uid, JSON.parse(cleanedMes), folder ?? "default", false)
 
-    return doc.id
+
+    return id
 }
 
 export const generateGPT = async (notes: string, id: string): Promise<void> => {

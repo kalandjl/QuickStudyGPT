@@ -6,13 +6,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import Folders from "./Folders";
 import Ops from "./Ops";
+import useAuth from "../../utils/useAuth";
 
 interface Props {}
 
 const SideBar: FC<Props> = () => {
 
     let [reload, setReload] = useState(true)
-    let [user] = useAuthState(auth)
+    let user = useAuth()
 
     return (
         <div className="h-full w-full bg-stone-800 px-2 py-4">
