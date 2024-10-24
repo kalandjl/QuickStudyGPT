@@ -27,7 +27,7 @@ const Title: FC<Props> = (props) => {
                 border-stone-600
                 hover:border-stone-700 
                 text-stone-100
-                focus:border-blue-500 focus:border-opacity-80 focus:text-gray-400 focus:border-4 focus:border-solid"
+                focus:border-blue-500 focus:border-opacity-80 focus:text-stone-200 focus:border-4 focus:border-solid"
                 defaultValue={props.title} 
                 onChange={e => setTitle(e.target.value)}/>
                 {title === docTitle ? <></> :

@@ -14,7 +14,8 @@ interface Props {
 
 const NavAccountDiv:FC<Props> = (props: Props) => {
 
-    let [ user, loading ] = useAuth(window.localStorage.getItem("accessToken"))
+    let [ user, loading ] = useAuth(typeof window !== "undefined" 
+        ? window.localStorage.getItem("accessToken") : null)
 
     const linkStyle = "text-slate-300 font-bold hover:cusor-pointer"
 

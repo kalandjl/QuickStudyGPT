@@ -20,6 +20,7 @@ const uri = process.env.DB_URI
 
 app.post('/set', async (req: Request, res: Response) => {
 
+    console.log("request")
 
     if (!uri) return res.sendStatus(404)
 

@@ -30,9 +30,10 @@ export const createSet = async (
 
 export const getSet = async (query: {[x: string]: any}, accessToken: string): Promise<setDoc> => {
 
+    console.log('fetching')
     // @ts-ignore
     const res: setDoc = await (await fetch(`http://localhost:4000/db/get/set`, {
-        method: "POST", 
+        method: "GET", 
         headers: {
             "Content-Type": "application/json", // Set the Content-Type header
             "Authorization": `Bearer ${accessToken}`

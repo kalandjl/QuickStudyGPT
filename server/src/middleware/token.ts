@@ -18,12 +18,18 @@ export const authenticateTokenMW = (req: Request, res: Response, next: NextFunct
 
 
     const uid = authenticateAccessToken(token, res)
-    console.log(uid)
  
-    if (!uid) return res.sendStatus(401)
+    if (!uid) {
+
+        console.log("JWT token invalid")
+
+        return res.sendStatus(401)
+    }
 
     req.body.accessToken = token
     req.body.uid = uid
+
+    console.log("authorized")
 
     next()
 }

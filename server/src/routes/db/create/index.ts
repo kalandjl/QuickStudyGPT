@@ -50,6 +50,7 @@ app.post("/user", async (req: Request, res: Response) => {
 app.post('/set', authenticateTokenMW, async (req: Request, res: Response) => {
 
     console.log(req.body)
+    
     if (!uri) return res.sendStatus(404)
 
     const client = new MongoClient(uri)

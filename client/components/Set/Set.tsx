@@ -30,7 +30,7 @@ const Set: FC<Props> = (props) => {
                 if (!token) return alert("jwt auth error")
 
                 const set = await getSet({_id: props.id}, token)
-                
+
                 if (!set) return
 
                 setSet(set)

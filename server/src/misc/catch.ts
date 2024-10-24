@@ -21,10 +21,8 @@ export const catchError = async (func: (params: any) => Promise<ErrorObject | Us
                     obj = {code: errors[error].code, message: errors[error].message}
                 }
             })
-            console.error(x.message)
             return obj
         } else {
-            console.log(x)
             let obj: CatchResObj = {code: 200, message: JSON.stringify(x) ?? undefined}
             return obj
         }
