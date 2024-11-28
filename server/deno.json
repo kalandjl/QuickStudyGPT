@@ -4,5 +4,7 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1"
-  }
+  },
+  "lint": true,
+  "fmt": true
 }

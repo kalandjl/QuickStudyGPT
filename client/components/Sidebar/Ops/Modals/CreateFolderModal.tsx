@@ -55,6 +55,8 @@ const CreateFolderModal: FC<Props> = (props) => {
 
                                 const userDoc = (await getDoc(doc(firestore, `/users/${props.uid}`))).data()
 
+                                console.log(userDoc)
+
                                 if (!userDoc) return 
                                 if (JSON.parse(userDoc.sets).hasOwnProperty(folderName)) return
 

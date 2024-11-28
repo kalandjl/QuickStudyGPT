@@ -11,7 +11,7 @@ export const onUserCreate = functions.auth.user().onCreate((user) => {
     admin.firestore().collection("users").doc(`/${user.uid}/`).create({
         email: user.email,
         uid: user.uid,
-        sets: [],
+        sets: '{"default": []}',
         created: timestamp
     })
 })
