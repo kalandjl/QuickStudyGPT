@@ -1,12 +1,29 @@
 "use client"
-import { FormEvent, useRef, useState } from "react"
+import { FormEvent, useRef, useState, useEffect } from "react"
 import { getCorrections, getGPT } from "../lib/gpt"
 import { Button, FormLabel, Heading, Input, Spinner, Stack, Textarea, FormControl } from "@chakra-ui/react"
 import { ArrowIcon, NotesIcon, QuizIcon } from "../app/icons"
 import Link from "next/link"
+import { getDocs, collection, QueryDocumentSnapshot, DocumentData } from "firebase/firestore"
 import Image from "next/image"
+import { firestore } from "../lib/firebase"
+
 
 const Home = () => {
+
+    let [studySets, setStudySets] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[] | undefined>(undefined)
+
+    useEffect(() => {
+
+        const doAsync = async () => {
+
+            const t = (await getDocs(collection(firestore, "/sets/"))).docs.filter((x,i) => i < 10)
+
+            setStudySets(t)
+        }
+
+        doAsync()
+    })
 
     return (
         <>
@@ -55,6 +72,21 @@ const Home = () => {
             className="px-40 py-5 grid">
 
             </main>
+            <section id="featured-sets" className="px-10">
+                <h1 className="text-4xl font-semibold text-teal-500 mb-6">
+                    Featured Sets
+                </h1>
+                <div className="grid gap-2" id="sets-grid ml-4">
+                    {studySets?.map((set, i) => (
+                    <div key={i}>
+                        <Link href={`/set/${set.id}`} className="text-stone-200">
+                            {JSON.stringify(set.data().title)}
+                        </Link>
+                    </div>
+                ))}
+                </div>
+            </section>
+
         </>
     )
 }
