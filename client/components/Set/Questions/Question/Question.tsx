@@ -12,6 +12,7 @@ interface Props {
     id: string
     questionIndex: string
     reload: React.Dispatch<React.SetStateAction<boolean>>
+    curUid: string | undefined
 }
 
 interface QuestionT {
@@ -50,7 +51,8 @@ const Question: FC<Props> = (props) => {
                         <QuestionOps 
                         question={props.questionIndex} 
                         id={props.id} 
-                        reload={props.reload} />
+                        reload={props.reload} 
+                        curUid={props.curUid} />
                     </div>
                     <form 
                     onSubmit={(e) => {

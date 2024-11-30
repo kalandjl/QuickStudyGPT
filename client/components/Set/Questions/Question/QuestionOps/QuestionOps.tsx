@@ -8,6 +8,7 @@ interface Props {
     id: string
     question: string
     reload: React.Dispatch<React.SetStateAction<boolean>>
+    curUid: string | undefined
 }
 
 interface ModalProps {
@@ -47,6 +48,7 @@ const QuestionOps: FC<Props> = (props) => {
 
     return (
         <>
+            {props.curUid === props.id ? 
             <div id="folder-ops-wrap" 
             className={`
             h-full flex place-items-center hover:cursor-pointer`} 
@@ -89,6 +91,9 @@ const QuestionOps: FC<Props> = (props) => {
                 </>
                 }
             </div>
+            : 
+            <></>
+            }   
         </>
     )
 }

@@ -3,6 +3,8 @@ import { useSearchParams } from "next/navigation";
 import { FC, useEffect, useMemo, useState } from "react";
 import QuestionsOps from "./QuestionsOps/QuestionsOps";
 import Question from "./Question/index";
+import { auth } from "../../../lib/firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 interface Props {
     id: string
@@ -26,6 +28,8 @@ interface Answer {
 
 
 const Questions: FC<Props> = (props: Props) => {
+
+    let [user] = useAuthState(auth)
 
     const t = useSearchParams()
     let [answers, updateAnswers] = useState<{[x:string]: Answer}>({})
@@ -59,7 +63,7 @@ const Questions: FC<Props> = (props: Props) => {
 
     return (
         <>
-            <div className="px-64 pt-10">
+            <div className="px-48 pt-10">
                 <div id="score-wrap" className="font-bold text-xl text-stone-300">
                     {score ? `Score: ${Math.floor(score[0] / score[1] * 100)}% (${score[0]}/${score[1]})` : ""}
                 </div>
@@ -79,12 +83,13 @@ const Questions: FC<Props> = (props: Props) => {
                         i={i} 
                         id={props.id}
                         questionIndex={question}
-                        key={i} />
+                        key={i} 
+                        curUid={user?.uid}/>
                     );
                     }) 
                     : ""
                 }     
-                <QuestionsOps id={props.id} notes={props.notes} prev={props.content} /> 
+                <QuestionsOps id={props.id} notes={props.notes} prev={props.content} curUid={user?.uid} /> 
             </div>
         </>
     )

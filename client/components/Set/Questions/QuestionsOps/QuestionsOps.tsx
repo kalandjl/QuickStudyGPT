@@ -9,6 +9,7 @@ interface Props {
     notes: string
     id: string
     prev: {[x: string]: {question: string, answer: string}}
+    curUid: string | undefined
 }
 
 const QuestionsOps: FC<Props> = (props) => {
@@ -21,22 +22,26 @@ const QuestionsOps: FC<Props> = (props) => {
         <>
             {loading ? <Loading loading={loading} /> : <></>}
             <div id="questions-ops" className="flex justify-start py-5 my-10">
-                <div id="gen-btn">
-                    <button className="transition ease-in-out px-6 py-4 rounded-md bg-green-800 hover:bg-green-900 text-stone-300
-                    text-xl font-bold hover:scale-105"
-                    onClick={async (e) => {
+                {props.curUid === props.id ? 
+                    <div id="gen-btn">
+                        <button className="transition ease-in-out px-6 py-4 rounded-md bg-green-800 hover:bg-green-900 text-stone-300
+                        text-xl font-bold hover:scale-105"
+                        onClick={async (e) => {
 
-                        setLoading(true)
+                            setLoading(true)
 
-                        await generateGPT(props.notes, props.id)
+                            await generateGPT(props.notes, props.id)
 
-                        setLoading(false)
+                            setLoading(false)
 
-                        setTimeout(() => window.location.reload(), 1000)
-                    }}>
-                        Generate more questions
-                    </button>
-                </div>
+                            setTimeout(() => window.location.reload(), 1000)
+                        }}>
+                            Generate more questions
+                        </button>
+                    </div>
+                :
+                <></>
+                }   
             </div>
         </>
     )

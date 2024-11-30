@@ -7,6 +7,8 @@ import { firestore } from "../../../lib/firebase";
 import Modal from "../../Modal";
 import AddToFolderModal from "./Modals/AddToFolderModal";
 import DeleteSetModal from "./Modals/DeleteSetModal";
+import { useAuthState }  from "react-firebase-hooks/auth"
+import { auth } from "../../../lib/firebase"
 
 interface Props {
     id: string
@@ -61,9 +63,12 @@ const SetOps: FC<Props> = (props: Props) => {
 
     const [modalsTrack, setModalsTrack] = useState<boolean[]>(new Array(ops.length).fill(false))
 
+    let [ user ] = useAuthState(auth)
+
     return (
         <>
             <div className="bg-purple-800"></div>
+            {user?.uid === props.id ? 
             <div className="flex gap-5" id="ops-container">
                 {/* List of options, mapped into elements to avoid redundancy */}
                 {
@@ -92,7 +97,10 @@ const SetOps: FC<Props> = (props: Props) => {
                     </div>
                 )})
                 }
-            </div>
+            </div> 
+            :
+            <></>
+        }
         </>
     )
 }

@@ -46,13 +46,13 @@ const Set: FC<Props> = (props) => {
             className="grid grid-flow-row grid-cols-8 pt-24">
                 <section className="flex flex-1 col-span-6 col-start-2"
                 id="heading-sect">
-                    <div className="flex flex-col w-full ">
+                    <div className="flex flex-col w-full">
                         <h1 className="text-6xl font-bold">
-                            <span className="text-gray-800 grid place-items-center w-1/3">
-                                <div className="grid grid-flow-col gap-5">
+                            <div className="text-gray-800">
+                                <div className="grid grid-flow-col gap-5 w-3/4">
                                     <Title title={set.title} id={props.id} /> 
                                 </div>
-                            </span>
+                            </div>
                         </h1>
                         <div className="mt-10">
                             {set.fullyLoaded === false ? 
