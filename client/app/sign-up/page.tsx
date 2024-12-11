@@ -25,7 +25,7 @@ const Page: NextPage = () => {
                             Sign Up
                         </h1>
 
-                        <div className="relative flex items-center mt-8">
+                        {/* <div className="relative flex items-center mt-8">
                             <span className="absolute">
                                 <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
@@ -73,19 +73,19 @@ const Page: NextPage = () => {
                                 focus:border-${themeColor}-400 dark:focus:border-${themeColor}-300 
                                 focus:ring-${themeColor}-300 focus:outline-none focus:ring focus:ring-opacity-40`} 
                             placeholder="Password" />
-                        </div>
+                        </div> */}
                     </form>
                     <div className="mt-6 w-full max-w-md">
-                        <button className={`w-full px-6 py-3 text-sm font-medium tracking-wide text-white 
+                        {/* <button className={`w-full px-6 py-3 text-sm font-medium tracking-wide text-white 
                             capitalize transition-colors duration-300 transform bg-${themeColor}-500 rounded-lg 
                             hover:bg-${themeColor}-400 focus:outline-none focus:ring focus:ring-${themeColor}-300 
                             focus:ring-opacity-50`}>
                             Sign in
-                        </button>
+                        </button> */}
 
-                        <p className="mt-4 text-center text-stone-300 dark:text-gray-400">
+                        {/* <p className="mt-4 text-center text-stone-300 dark:text-gray-400">
                             or sign in with
-                        </p>
+                        </p> */}
 
                         <div 
                         className="flex items-center justify-center px-6 py-3 mt-4 font-semibold text-lg
