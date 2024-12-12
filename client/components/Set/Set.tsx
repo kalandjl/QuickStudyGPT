@@ -1,11 +1,12 @@
 "use client"
 import { doc, getDoc } from "firebase/firestore";
 import { FC, useEffect, useState } from "react";
-import { firestore } from "../../lib/firebase";
+import { auth, firestore } from "../../lib/firebase";
 import { notFound } from "next/navigation";
 import Title from "./Title";
 import SetOps from "./SetOps";
 import Questions from "./Questions";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface Props {
     id: string
@@ -17,6 +18,10 @@ const Set: FC<Props> = (props) => {
 
     const [set, setSet] = useState<{[x: string]: any}>()
     const [loading, setLoading] = useState(true);
+
+    let [user] = useAuthState(auth)
+
+
 
     useEffect(() => {
 
@@ -50,7 +55,7 @@ const Set: FC<Props> = (props) => {
                         <h1 className="text-6xl font-bold">
                             <div className="text-gray-800">
                                 <div className="grid grid-flow-col gap-5 w-3/4">
-                                    <Title title={set.title} id={props.id} /> 
+                                    <Title uid={set.uid} title={set.title} id={props.id} /> 
                                 </div>
                             </div>
                         </h1>
@@ -65,7 +70,9 @@ const Set: FC<Props> = (props) => {
                 </section>
                 <section className="col-span-8" 
                 id="questions-sect">
-                    <Questions content={set.content} id={props.id} notes={set.notes} reload={props.reload} />
+                    <div id="questions-wrap" className="px-20">
+                        <Questions uid={set.uid} content={set.content} id={props.id} notes={set.notes} reload={props.reload} />
+                    </div>
                 </section>
             </main> 
         </>

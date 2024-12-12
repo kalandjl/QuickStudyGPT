@@ -14,6 +14,7 @@ interface Props {
     }}
     notes: string
     reload: React.Dispatch<React.SetStateAction<boolean>>
+    uid: string
 }
 
 interface QuestionT {
@@ -28,6 +29,7 @@ interface Answer {
 
 
 const Questions: FC<Props> = (props: Props) => {
+
 
     let [user] = useAuthState(auth)
 

@@ -10,6 +10,7 @@ import { auth } from "../../../lib/firebase"
 interface Props {
     title: string
     id: string
+    uid: string
 }
 
 const Title: FC<Props> = (props) => {
@@ -18,11 +19,13 @@ const Title: FC<Props> = (props) => {
     let [docTitle, setDocTitle] = useState(props.title)
     let [loading, setLoading] = useState<boolean>(false)
     let [user] = useAuthState(auth)
+    let [owned, setOwned] = useState<boolean>(props.uid === user?.uid)
+    
 
     return (
         <>
             <div className="relative">
-                {user?.uid === props.id ? 
+                {owned ? 
                 <>
                     <input type="text"
                     className="px-5 py-2 rounded-lg

@@ -81,7 +81,7 @@ const Folders: FC<Props> = (props) => {
                     }))}>
                             <Link 
                             href={`/folder/${folder.toLowerCase()}`} 
-                            className="grid plcae-items-center">
+                            className="grid place-items-center">
                                 <h2 className="text-2xl font-bold grid place-items-center text-slate-300 hover:underline">
                                     {folder === "default" ? "" : folder}
                                 </h2>
