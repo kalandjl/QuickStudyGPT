@@ -1,5 +1,3 @@
-Of course. Based on your updated and more detailed description, here is a professional README tailored for your QuickStudyGPT project. This version accurately reflects the current tech stack (using Firestore) while also highlighting your future goals (migrating to MongoDB/JWTs).
-
 #QuickStudyGPT 
 An intelligent study tool that transforms your notes into interactive, fill-in-the-blank quizzes using the power of the OpenAI API.
 
