@@ -1,4 +1,4 @@
-#QuickStudyGPT 
+# QuickStudyGPT 
 An intelligent study tool that transforms your notes into interactive, fill-in-the-blank quizzes using the power of the OpenAI API.
 
 ## About This Project
