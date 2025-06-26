@@ -4,10 +4,14 @@ An intelligent study tool that transforms your notes into interactive, fill-in-t
 ## About This Project
 QuickStudyGPT is a full-stack web application designed to enhance the learning process. Users can submit their study notes, and leveraging sophisticated prompt engineering, the application communicates with the OpenAI API to generate a custom-tailored quiz. The goal is to provide an active-recall study method that is both effective and engaging.
 
-## Key Features
+## Key Features / UI
   - AI-Powered Quiz Generation: Pastes or types study notes to be analyzed by the OpenAI (ChatGPT) API.
   - Customizable Quizzes: Users can specify the number of fill-in-the-blank questions they want.
   - Interactive Learning: Actively answer questions to reinforce knowledge.
+
+[](images/ss_1.png)
+[](images/ss_2.png)
+[](images/ss_3.png)
 
 ## Modern Tech Stack: Built with a fast and modern Next.js and Deno.js architecture.
 ## Tech Stack:
