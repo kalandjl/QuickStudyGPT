@@ -9,9 +9,9 @@ QuickStudyGPT is a full-stack web application designed to enhance the learning p
   - Customizable Quizzes: Users can specify the number of fill-in-the-blank questions they want.
   - Interactive Learning: Actively answer questions to reinforce knowledge.
 
-['alt_text'](images/ss_1.png)
-['alt_text'](images/ss_2.png)
-['alt_text'](images/ss_3.png)
+![alt_text](images/ss_1.png)
+![alt_text](images/ss_2.png)
+![alt_text](images/ss_3.png)
 
 ## Modern Tech Stack: Built with a fast and modern Next.js and Deno.js architecture.
 ## Tech Stack:
